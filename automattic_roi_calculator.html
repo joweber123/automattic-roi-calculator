@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Automattic for Agencies ROI Calculator</title>
+  <style>
+    :root {
+      --primary-color: #1590c7;
+      --secondary-color: #117ac9;
+      --light-bg: #f8f9fa;
+      --border-color: #dee2e6;
+      --success-color: #28a745;
+      --dark-bg: #021a24;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      line-height: 1.5;
+      color: #333;
+      margin: 0;
+      padding: 10px;
+      background-color: var(--dark-bg);
+      height: 100vh;
+      display: flex;
+      align-items: stretch;
+      box-sizing: border-box;
+    }
+
+    .container {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      flex: 1;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
+      overflow: auto;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      margin-bottom: 12px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    h2, h3 {
+      color: var(--secondary-color);
+      font-weight: 600;
+    }
+
+    h3 {
+      font-size: 16px;
+    }
+
+    h4 {
+      font-size: 14px;
+      color: var(--secondary-color);
+      font-weight: 600;
+      margin: 12px 0 8px 0;
+    }
+
+    /* Two-column layout */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 20px;
+    }
+
+    .input-column {
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+
+    .results-column {
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+
+    .input-section {
+      background: var(--light-bg);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .input-group {
+      margin-bottom: 8px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: #333;
+      font-size: 13px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 8px;
+    }
+
+    button:hover {
+      background: var(--secondary-color);
+    }
+
+    .results {
+      display: none;
+    }
+
+    .comparison-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .competitor-card, .pressable-card {
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: var(--light-bg);
+    }
+
+    .competitor-card {
+      border-left: 4px solid #ff9800;
+    }
+
+    .pressable-card {
+      border-left: 4px solid var(--success-color);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+      color: var(--secondary-color);
+    }
+
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      font-size: 12px;
+    }
+
+    .stat:last-child {
+      border-bottom: none;
+    }
+
+    .stat-label {
+      font-weight: 600;
+      color: #555;
+    }
+
+    .stat-value {
+      color: #333;
+    }
+
+    .winner-banner {
+      padding: 12px;
+      border-radius: 6px;
+      text-align: center;
+      margin-bottom: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      border: 2px solid;
+    }
+
+    .pressable-wins {
+      background: #e8f5e9;
+      color: var(--success-color);
+      border-color: var(--success-color);
+    }
+
+    .competitor-wins {
+      background: #fff3e0;
+      color: #e65100;
+      border-color: #ff9800;
+    }
+
+    .savings {
+      background: var(--light-bg);
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 12px;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .savings h3 {
+      margin: 0 0 8px 0;
+      color: var(--secondary-color);
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .savings p {
+      margin: 5px 0;
+      font-size: 13px;
+    }
+
+    .savings-amount {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .match-details {
+      background: var(--light-bg);
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .match-details h3 {
+      margin: 0 0 10px 0;
+      color: var(--secondary-color);
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .match-details p {
+      margin: 6px 0;
+      font-size: 13px;
+    }
+
+    .better {
+      color: #2e7d32;
+      font-weight: 600;
+    }
+
+    .worse {
+      color: #c62828;
+      font-weight: 600;
+    }
+
+    .equal {
+      color: #1976d2;
+      font-weight: 600;
+    }
+
+    .comparison-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .metric-card {
+      background: var(--light-bg);
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .metric-title {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .metric-value {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    small {
+      color: #666;
+      font-size: 11px;
+      font-weight: 400;
+    }
+
+    .stat small {
+      display: block;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    /* Accordion styles */
+    .accordion {
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      background: linear-gradient(135deg, var(--light-bg) 0%, #e9ecef 100%);
+      padding: 10px 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--secondary-color);
+      transition: background 0.3s;
+      user-select: none;
+    }
+
+    .accordion-header:hover {
+      background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    }
+
+    .accordion-icon {
+      font-size: 18px;
+      transition: transform 0.3s;
+    }
+
+    .accordion-header.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      background: white;
+    }
+
+    .accordion-content.active {
+      max-height: 3000px;
+      transition: max-height 0.5s ease-in;
+    }
+
+    .accordion-inner {
+      padding: 12px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 1200px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .input-column, .results-column {
+        max-height: none;
+      }
+
+      .comparison-card {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-metrics {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Automattic for Agencies ROI Calculator</h1>
+
+    <div class="main-layout">
+      <div class="input-column">
+        <div class="input-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; color: var(--secondary-color); font-weight: 600;">Hosting Costs</h3>
+        <button onclick="clearAllFields()" style="background: #6c757d; padding: 6px 12px; font-size: 12px; margin: 0; width: auto;">Clear All</button>
+      </div>
+
+      <div class="input-group">
+        <label for="competitorName">Hosting Provider</label>
+        <select id="competitorNameSelect" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="handleCompetitorSelection()">
+          <option value="">-- Select a hosting provider --</option>
+          <option value="WP Engine" selected>WP Engine</option>
+          <option value="Kinsta">Kinsta</option>
+          <option value="Flywheel WordPress Hosting">Flywheel</option>
+          <option value="Pantheon">Pantheon</option>
+          <option value="Nexcess">Nexcess</option>
+          <option value="Cloudways">Cloudways</option>
+          <option value="Liquid Web">Liquid Web</option>
+          <option value="Acquia Cloud Platform">Acquia Cloud Platform</option>
+          <option value="Platform.sh">Platform.sh</option>
+          <option value="A2 Hosting Inc">A2 Hosting (WHG)</option>
+          <option value="Advanced Hosting">Advanced Hosting</option>
+          <option value="Akamai Technologies">Akamai Technologies</option>
+          <option value="Bluehost">Bluehost (Newfold Digital)</option>
+          <option value="DigitalOcean">DigitalOcean</option>
+          <option value="DreamHost">DreamHost</option>
+          <option value="GoDaddy">GoDaddy</option>
+          <option value="Hetzner">Hetzner</option>
+          <option value="Hostgator">Hostgator (Newfold Digital)</option>
+          <option value="Hostinger International Limited">Hostinger</option>
+          <option value="InMotion Hosting Inc">InMotion Hosting</option>
+          <option value="Newfold Digital">Newfold Digital</option>
+          <option value="WPX Hosting">WPX Hosting</option>
+          <option value="XSERVER">XServer</option>
+          <option value="custom">Custom (Enter Your Own)</option>
+        </select>
+        <input type="text" id="competitorName" placeholder="Enter custom competitor name" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; margin-top: 8px; display: none;">
+      </div>
+
+      <div class="input-group">
+        <label for="competitorSites">Number of Sites</label>
+        <input type="number" id="competitorSites" placeholder="e.g., 50" value="50">
+      </div>
+
+      <div class="input-group">
+        <label for="pricingPeriod">Pricing Period</label>
+        <select id="pricingPeriod" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="competitorPrice"><span id="priceLabel">Monthly</span> Price ($)</label>
+        <input type="number" id="competitorPrice" placeholder="e.g., 575" value="575">
+      </div>
+
+      <div class="input-group">
+        <label for="competitorVisits">Visits per Month (leave blank if unlimited/unknown)</label>
+        <input type="text" id="competitorVisits" placeholder="e.g., 400000" value="400000">
+      </div>
+
+      <div class="input-group">
+        <label for="competitorStorage">Storage (GB) (optional)</label>
+        <input type="number" id="competitorStorage" placeholder="e.g., 50" value="50">
+      </div>
+
+      <div class="accordion" style="margin-top: 15px;">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>Performance (Per Site) - Optional</span>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <div class="input-group">
+              <label for="resourceType">Resource Allocation Type</label>
+              <select id="resourceType">
+                <option value="per-site">Per Site (dedicated per site)</option>
+                <option value="pooled" selected>Pooled (shared across all sites)</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="competitorCPU">CPU Cores / vCPUs <span id="cpuLabel">(per site)</span></label>
+              <input type="number" step="0.1" id="competitorCPU" placeholder="e.g., 2 or 0.5">
+            </div>
+
+            <div class="input-group">
+              <label for="competitorPHPWorkers">PHP Workers <span id="phpLabel">(per site)</span></label>
+              <input type="number" id="competitorPHPWorkers" placeholder="e.g., 4">
+            </div>
+
+            <div class="input-group" style="margin-bottom: 0;">
+              <label for="competitorRAM">RAM (GB) <span id="ramLabel">(per site)</span></label>
+              <input type="number" step="0.1" id="competitorRAM" placeholder="e.g., 4">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auto-comparison enabled - button hidden -->
+      <button onclick="compareHosting()" style="display: none;">Compare with Pressable</button>
+        </div>
+
+        <div class="accordion" style="margin-top: 15px;">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Plugin/Tool Replacements</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+                <button onclick="clearAllTools()" style="background: #6c757d; padding: 6px 12px; font-size: 12px; margin: 0; width: auto; color: white; border: none; border-radius: 4px; cursor: pointer;">Clear All</button>
+              </div>
+
+              <div id="tool-categories" style="max-height: 400px; overflow-y: auto;">
+                <div id="securityBackupWrapper" class="input-group" style="display: flex; align-items: flex-start; gap: 10px; transition: opacity 0.2s;">
+                  <input type="checkbox" id="securityBackupEnabled" checked style="margin-top: 8px; width: 18px; height: 18px; cursor: pointer;" onchange="toggleToolCategory('securityBackup')">
+                  <div style="flex: 1;">
+                    <label for="securityBackupCost">
+                      <span style="font-weight: 600;">Security & Backup</span>
+                      <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Wordfence, Sucuri, UpdraftPlus, WP Engine Security Add-on</span>
+                    </label>
+                    <input type="number" id="securityBackupCost" placeholder="150" value="150" step="50">
+                  </div>
+                </div>
+
+                <div id="performanceWrapper" class="input-group" style="display: flex; align-items: flex-start; gap: 10px; transition: opacity 0.2s;">
+                  <input type="checkbox" id="performanceEnabled" checked style="margin-top: 8px; width: 18px; height: 18px; cursor: pointer;" onchange="toggleToolCategory('performance')">
+                  <div style="flex: 1;">
+                    <label for="performanceCost">
+                      <span style="font-weight: 600;">Performance & Optimization</span>
+                      <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">WP Rocket, NitroPack, Smush, WP Engine Speed Boost</span>
+                    </label>
+                    <input type="number" id="performanceCost" placeholder="50" value="50" step="50">
+                  </div>
+                </div>
+
+                <div id="videoHostingWrapper" class="input-group" style="display: flex; align-items: flex-start; gap: 10px; transition: opacity 0.2s; opacity: 0.4;">
+                  <input type="checkbox" id="videoHostingEnabled" style="margin-top: 8px; width: 18px; height: 18px; cursor: pointer;" onchange="toggleToolCategory('videoHosting')">
+                  <div style="flex: 1;">
+                    <label for="videoHostingCost">
+                      <span style="font-weight: 600;">Video Hosting</span>
+                      <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Vimeo, Wistia</span>
+                    </label>
+                    <input type="number" id="videoHostingCost" placeholder="200" value="200" step="50" disabled>
+                  </div>
+                </div>
+
+                <div id="formsCRMWrapper" class="input-group" style="display: flex; align-items: flex-start; gap: 10px; transition: opacity 0.2s; opacity: 0.4;">
+                  <input type="checkbox" id="formsCRMEnabled" style="margin-top: 8px; width: 18px; height: 18px; cursor: pointer;" onchange="toggleToolCategory('formsCRM')">
+                  <div style="flex: 1;">
+                    <label for="formsCRMCost">
+                      <span style="font-weight: 600;">Forms & CRM</span>
+                      <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Gravity Forms, WPForms, HubSpot</span>
+                    </label>
+                    <input type="number" id="formsCRMCost" placeholder="50" value="50" step="50" disabled>
+                  </div>
+                </div>
+
+                <div id="spamProtectionWrapper" class="input-group" style="display: flex; align-items: flex-start; gap: 10px; transition: opacity 0.2s; opacity: 0.4;">
+                  <input type="checkbox" id="spamProtectionEnabled" style="margin-top: 8px; width: 18px; height: 18px; cursor: pointer;" onchange="toggleToolCategory('spamProtection')">
+                  <div style="flex: 1;">
+                    <label for="spamProtectionCost">
+                      <span style="font-weight: 600;">Spam Protection</span>
+                      <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Akismet Plus, CleanTalk</span>
+                    </label>
+                    <input type="number" id="spamProtectionCost" placeholder="50" value="50" step="50" disabled>
+                  </div>
+                </div>
+
+                <div id="analyticsWrapper" class="input-group" style="display: flex; align-items: flex-start; gap: 10px; transition: opacity 0.2s; opacity: 0.4;">
+                  <input type="checkbox" id="analyticsEnabled" style="margin-top: 8px; width: 18px; height: 18px; cursor: pointer;" onchange="toggleToolCategory('analytics')">
+                  <div style="flex: 1;">
+                    <label for="analyticsCost">
+                      <span style="font-weight: 600;">Analytics & Stats</span>
+                      <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">MonsterInsights, ExactMetrics</span>
+                    </label>
+                    <input type="number" id="analyticsCost" placeholder="150" value="150" step="50" disabled>
+                  </div>
+                </div>
+
+                <div id="socialSharingWrapper" class="input-group" style="display: flex; align-items: flex-start; gap: 10px; transition: opacity 0.2s; opacity: 0.4;">
+                  <input type="checkbox" id="socialSharingEnabled" style="margin-top: 8px; width: 18px; height: 18px; cursor: pointer;" onchange="toggleToolCategory('socialSharing')">
+                  <div style="flex: 1;">
+                    <label for="socialSharingCost">
+                      <span style="font-weight: 600;">Social Media & Sharing</span>
+                      <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Buffer, Hootsuite, Blog2Social</span>
+                    </label>
+                    <input type="number" id="socialSharingCost" placeholder="50" value="50" step="50" disabled>
+                  </div>
+                </div>
+
+                <div id="searchWrapper" class="input-group" style="display: flex; align-items: flex-start; gap: 10px; transition: opacity 0.2s; opacity: 0.4;">
+                  <input type="checkbox" id="searchEnabled" style="margin-top: 8px; width: 18px; height: 18px; cursor: pointer;" onchange="toggleToolCategory('search')">
+                  <div style="flex: 1;">
+                    <label for="searchCost">
+                      <span style="font-weight: 600;">Site Search</span>
+                      <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">SearchWP, Relevanssi, Algolia</span>
+                    </label>
+                    <input type="number" id="searchCost" placeholder="100" value="100" step="50" disabled>
+                  </div>
+                </div>
+
+                <div id="uptimeWrapper" class="input-group" style="display: flex; align-items: flex-start; gap: 10px; transition: opacity 0.2s; opacity: 0.4;">
+                  <input type="checkbox" id="uptimeEnabled" style="margin-top: 8px; width: 18px; height: 18px; cursor: pointer;" onchange="toggleToolCategory('uptime')">
+                  <div style="flex: 1;">
+                    <label for="uptimeCost">
+                      <span style="font-weight: 600;">Uptime Monitoring</span>
+                      <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">UptimeRobot Pro, Pingdom</span>
+                    </label>
+                    <input type="number" id="uptimeCost" placeholder="50" value="50" step="50" disabled>
+                  </div>
+                </div>
+              </div>
+
+              <div id="tool-savings-summary" style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 4px; border: 1px solid var(--success-color);">
+                <div style="font-size: 12px; font-weight: 600; color: var(--success-color);">Total Plugin/Tool Savings:</div>
+                <div id="tool-savings-amount" style="font-size: 16px; font-weight: 600; color: var(--success-color);">$200/year</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" style="margin-top: 15px;">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Developer Time Savings</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">Estimate time saved by reducing hosting-related issues with Pressable's managed hosting</p>
+
+              <div class="input-group">
+                <label for="devHourlyRate">Developer Hourly Rate ($)</label>
+                <input type="number" id="devHourlyRate" placeholder="30" value="30" step="5">
+              </div>
+
+              <div class="input-group">
+                <label for="devHoursPerMonth">Hours/Month on Hosting Issues</label>
+                <input type="number" id="devHoursPerMonth" placeholder="2" value="2" step="0.5">
+              </div>
+
+              <div id="dev-time-summary" style="margin-top: 10px; padding: 10px; background: #e3f2fd; border-radius: 4px; border: 1px solid #1976d2;">
+                <div style="font-size: 12px; font-weight: 600; color: #1976d2;">Estimated Annual Savings:</div>
+                <div id="dev-time-amount" style="font-size: 16px; font-weight: 600; color: #1976d2;">$360/year</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" style="margin-top: 15px;">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Partner Program Lead Values</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">Turn visibility into revenue with warm, pre-qualified leads from Automattic's ecosystem</p>
+
+              <div style="background: white; padding: 12px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 12px;">
+                <h4 style="margin: 0 0 10px 0; font-size: 13px; color: var(--secondary-color);">Agency Partner ($1,200+ IAR)</h4>
+                <div class="input-group">
+                  <label for="agencyPartnerLeads">Number of leads/year</label>
+                  <input type="number" id="agencyPartnerLeads" placeholder="1" value="1" step="1" min="0">
+                </div>
+                <div class="input-group">
+                  <label for="agencyPartnerLeadValue">Average value per lead ($)</label>
+                  <input type="number" id="agencyPartnerLeadValue" placeholder="10000" value="10000" step="500">
+                </div>
+                <div style="margin-top: 8px; padding: 8px; background: var(--light-bg); border-radius: 4px;">
+                  <span style="font-size: 12px; color: #666;">Annual Value: </span>
+                  <span id="agencyTotalValue" style="font-size: 14px; font-weight: 600; color: var(--secondary-color);">$10,000</span>
+                </div>
+              </div>
+
+              <div style="background: white; padding: 12px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 12px;">
+                <h4 style="margin: 0 0 10px 0; font-size: 13px; color: var(--secondary-color);">Pro Partner Additional ($5,000+ IAR)</h4>
+                <div class="input-group">
+                  <label for="proPartnerLeads">Additional leads/year</label>
+                  <input type="number" id="proPartnerLeads" placeholder="1" value="1" step="1" min="0">
+                </div>
+                <div class="input-group">
+                  <label for="proPartnerLeadValue">Average value per lead ($)</label>
+                  <input type="number" id="proPartnerLeadValue" placeholder="15000" value="15000" step="500">
+                </div>
+                <div style="margin-top: 8px; padding: 8px; background: var(--light-bg); border-radius: 4px;">
+                  <span style="font-size: 12px; color: #666;">Annual Value: </span>
+                  <span id="proTotalValue" style="font-size: 14px; font-weight: 600; color: var(--secondary-color);">$15,000</span>
+                </div>
+              </div>
+
+              <div id="tier-status-summary" style="margin-top: 10px; padding: 10px; background: #f3e5f5; border-radius: 4px; border: 1px solid #9c27b0; display: none;">
+                <div style="font-size: 12px; font-weight: 600; color: #9c27b0;">Partner Tier Status:</div>
+                <div id="tier-status-text" style="font-size: 14px; font-weight: 600; color: #9c27b0; margin-top: 5px;"></div>
+                <div id="tier-lead-value" style="font-size: 13px; color: #7b1fa2; margin-top: 5px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" style="margin-top: 15px;">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Co-Selling Opportunities</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">Win more deals with Automattic's co-selling support and sales expertise</p>
+
+              <div class="input-group">
+                <label for="coSellingProjects">Number of projects won/year</label>
+                <input type="number" id="coSellingProjects" placeholder="1" value="1" step="1" min="0">
+              </div>
+
+              <div class="input-group">
+                <label for="coSellingProjectValue">Average value per project ($)</label>
+                <input type="number" id="coSellingProjectValue" placeholder="10000" value="10000" step="500">
+              </div>
+
+              <div style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 4px; border: 1px solid var(--success-color);">
+                <div style="font-size: 12px; color: #2e7d32;">Annual Co-Selling Value:</div>
+                <div id="coSellingTotalValue" style="font-size: 18px; font-weight: 600; color: var(--success-color);">$10,000/year</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-column">
+        <div id="results" class="results">
+          <!-- Results will be inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Inline Pressable Pricing Data
+    const HOSTING_PRICING = {
+  'Pressable': {
+    providerName: 'Pressable',
+    currency: 'USD',
+    plans: [
+      { name: 'Signature 1', priceMonthly: 25, priceYearly: 300, sites: 1, stagingSites: 1, visitsPerMonth: 30000, storageGB: 20, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 25, pricePerSiteYearly: 300 },
+      { name: 'Signature 2', priceMonthly: 45, priceYearly: 540, sites: 3, stagingSites: 3, visitsPerMonth: 50000, storageGB: 30, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 15, pricePerSiteYearly: 180 },
+      { name: 'Signature 3', priceMonthly: 60, priceYearly: 720, sites: 5, stagingSites: 5, visitsPerMonth: 75000, storageGB: 35, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 12, pricePerSiteYearly: 144 },
+      { name: 'Signature 4', priceMonthly: 90, priceYearly: 1080, sites: 10, stagingSites: 10, visitsPerMonth: 150000, storageGB: 50, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 9, pricePerSiteYearly: 108 },
+      { name: 'Signature 5', priceMonthly: 155, priceYearly: 1860, sites: 20, stagingSites: 20, visitsPerMonth: 400000, storageGB: 80, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 7.75, pricePerSiteYearly: 93 },
+      { name: 'Signature 6', priceMonthly: 350, priceYearly: 4200, sites: 50, stagingSites: 50, visitsPerMonth: 1000000, storageGB: 200, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 7, pricePerSiteYearly: 84 },
+      { name: 'Signature 7', priceMonthly: 545, priceYearly: 6540, sites: 80, stagingSites: 80, visitsPerMonth: 1600000, storageGB: 275, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.81, pricePerSiteYearly: 81.75 },
+      { name: 'Signature 8', priceMonthly: 675, priceYearly: 8100, sites: 100, stagingSites: 100, visitsPerMonth: 2000000, storageGB: 325, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.75, pricePerSiteYearly: 81 },
+      { name: 'Signature 9', priceMonthly: 805, priceYearly: 9660, sites: 120, stagingSites: 120, visitsPerMonth: 2400000, storageGB: 375, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.71, pricePerSiteYearly: 80.50 },
+      { name: 'Signature 10', priceMonthly: 1000, priceYearly: 12000, sites: 150, stagingSites: 150, visitsPerMonth: 3000000, storageGB: 450, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.67, pricePerSiteYearly: 80 },
+      { name: 'Signature 11', priceMonthly: 1325, priceYearly: 15900, sites: 200, stagingSites: 200, visitsPerMonth: 4000000, storageGB: 500, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.63, pricePerSiteYearly: 79.50 },
+      { name: 'Signature 12', priceMonthly: 1650, priceYearly: 19800, sites: 250, stagingSites: 250, visitsPerMonth: 5000000, storageGB: 550, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.60, pricePerSiteYearly: 79.20 },
+      { name: 'Signature 13', priceMonthly: 1975, priceYearly: 23700, sites: 300, stagingSites: 300, visitsPerMonth: 6000000, storageGB: 600, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.58, pricePerSiteYearly: 79 },
+      { name: 'Signature 14', priceMonthly: 2300, priceYearly: 27600, sites: 350, stagingSites: 350, visitsPerMonth: 7000000, storageGB: 700, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.57, pricePerSiteYearly: 78.86 },
+      { name: 'Signature 15', priceMonthly: 2625, priceYearly: 31500, sites: 400, stagingSites: 400, visitsPerMonth: 8000000, storageGB: 800, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.56, pricePerSiteYearly: 78.75 },
+      { name: 'Signature 16', priceMonthly: 2950, priceYearly: 35400, sites: 450, stagingSites: 450, visitsPerMonth: 9000000, storageGB: 900, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.56, pricePerSiteYearly: 78.67 },
+      { name: 'Signature 17', priceMonthly: 3275, priceYearly: 39300, sites: 500, stagingSites: 500, visitsPerMonth: 10000000, storageGB: 1000, bandwidth: 'Unmetered', phpWorkers: 5, phpWorkersBurst: 110, cpuCores: 5, cpuCoresBurst: 110, ramMB: 2560, ramMBMax: 10240, ramPerWorkerMB: 512, ramPerWorkerMaxMB: 2048, pricePerSiteMonthly: 6.55, pricePerSiteYearly: 78.60 }
+    ],
+    notes: [
+      'With Signature Plans, your traffic & storage limits are shared amongst your total sites.',
+      'All plans include staging sites equal to production sites',
+      'Unmetered bandwidth on all plans'
+    ]
+  }
+};
+
+function getHostingPricing(hostName) {
+  return HOSTING_PRICING[hostName] || null;
+}
+
+function findBestPlan(hostName, numSites) {
+  const pricing = getHostingPricing(hostName);
+  if (!pricing) return null;
+  const matchingPlans = pricing.plans.filter(plan => plan.sites >= numSites && plan.priceMonthly !== null);
+  if (matchingPlans.length === 0) return null;
+  matchingPlans.sort((a, b) => a.sites - b.sites);
+  return matchingPlans[0];
+}
+
+function comparePlans(plans) {
+  const validPlans = plans.filter(p => p.priceMonthly !== null);
+  if (validPlans.length === 0) return null;
+  return {
+    lowestPricePerSiteMonthly: Math.min(...validPlans.map(p => p.pricePerSiteMonthly)),
+    highestPricePerSiteMonthly: Math.max(...validPlans.map(p => p.pricePerSiteMonthly)),
+    lowestPricePerSiteYearly: Math.min(...validPlans.map(p => p.pricePerSiteYearly)),
+    highestPricePerSiteYearly: Math.max(...validPlans.map(p => p.pricePerSiteYearly)),
+    averagePricePerSiteMonthly: validPlans.reduce((sum, p) => sum + p.pricePerSiteMonthly, 0) / validPlans.length,
+    totalPlans: plans.length,
+    plansWithPricing: validPlans.length
+  };
+}
+
+// Jetpack Complete annual value constant
+const JETPACK_COMPLETE_VALUE = 899;
+  </script>
+  <script>
+    // Handle competitor selection dropdown
+    function handleCompetitorSelection() {
+      const select = document.getElementById('competitorNameSelect');
+      const customInput = document.getElementById('competitorName');
+
+      if (select.value === 'custom') {
+        // Show custom input field
+        customInput.style.display = 'block';
+        customInput.value = '';
+        customInput.focus();
+      } else {
+        // Hide custom input and use selected value
+        customInput.style.display = 'none';
+        customInput.value = select.value;
+      }
+
+      // Trigger auto-compare if other fields are filled
+      autoCompare();
+    }
+
+    // Clear all tools (uncheck all plugin/tool checkboxes)
+    function clearAllTools() {
+      // Uncheck and disable all tool categories
+      const categories = ['securityBackup', 'performance', 'videoHosting', 'formsCRM', 'spamProtection', 'analytics', 'socialSharing', 'search', 'uptime'];
+
+      categories.forEach(category => {
+        const checkbox = document.getElementById(category + 'Enabled');
+        const wrapper = document.getElementById(category + 'Wrapper');
+        const input = document.getElementById(category + 'Cost');
+
+        checkbox.checked = false;
+        wrapper.style.opacity = '0.4';
+        input.disabled = true;
+      });
+
+      // Update the total savings
+      updateToolSavings();
+    }
+
+    // Clear all fields function
+    function clearAllFields() {
+      // Clear competitor details
+      document.getElementById('competitorNameSelect').value = 'WP Engine';
+      document.getElementById('competitorName').value = 'WP Engine';
+      document.getElementById('competitorName').style.display = 'none';
+      document.getElementById('competitorSites').value = '';
+      document.getElementById('competitorPrice').value = '';
+      document.getElementById('competitorVisits').value = '';
+      document.getElementById('competitorStorage').value = '';
+      document.getElementById('pricingPeriod').value = 'monthly';
+      document.getElementById('resourceType').value = 'per-site';
+      document.getElementById('competitorCPU').value = '';
+      document.getElementById('competitorPHPWorkers').value = '';
+      document.getElementById('competitorRAM').value = '';
+
+      // Clear dev time savings
+      document.getElementById('devHourlyRate').value = '30';
+      document.getElementById('devHoursPerMonth').value = '2';
+
+      // Clear partner tier values
+      document.getElementById('agencyPartnerLeads').value = '1';
+      document.getElementById('agencyPartnerLeadValue').value = '10000';
+      document.getElementById('proPartnerLeads').value = '1';
+      document.getElementById('proPartnerLeadValue').value = '15000';
+
+      // Clear co-selling values
+      document.getElementById('coSellingProjects').value = '1';
+      document.getElementById('coSellingProjectValue').value = '10000';
+
+      // Reset all tool costs to defaults (only security and performance enabled)
+      document.getElementById('securityBackupEnabled').checked = true;
+      document.getElementById('securityBackupCost').value = '150';
+      document.getElementById('securityBackupCost').disabled = false;
+      document.getElementById('securityBackupWrapper').style.opacity = '1';
+
+      document.getElementById('performanceEnabled').checked = true;
+      document.getElementById('performanceCost').value = '50';
+      document.getElementById('performanceCost').disabled = false;
+      document.getElementById('performanceWrapper').style.opacity = '1';
+
+      document.getElementById('videoHostingEnabled').checked = false;
+      document.getElementById('videoHostingCost').value = '200';
+      document.getElementById('videoHostingCost').disabled = true;
+      document.getElementById('videoHostingWrapper').style.opacity = '0.4';
+
+      document.getElementById('formsCRMEnabled').checked = false;
+      document.getElementById('formsCRMCost').value = '50';
+      document.getElementById('formsCRMCost').disabled = true;
+      document.getElementById('formsCRMWrapper').style.opacity = '0.4';
+
+      document.getElementById('spamProtectionEnabled').checked = false;
+      document.getElementById('spamProtectionCost').value = '50';
+      document.getElementById('spamProtectionCost').disabled = true;
+      document.getElementById('spamProtectionWrapper').style.opacity = '0.4';
+
+      document.getElementById('analyticsEnabled').checked = false;
+      document.getElementById('analyticsCost').value = '150';
+      document.getElementById('analyticsCost').disabled = true;
+      document.getElementById('analyticsWrapper').style.opacity = '0.4';
+
+      document.getElementById('socialSharingEnabled').checked = false;
+      document.getElementById('socialSharingCost').value = '50';
+      document.getElementById('socialSharingCost').disabled = true;
+      document.getElementById('socialSharingWrapper').style.opacity = '0.4';
+
+      document.getElementById('searchEnabled').checked = false;
+      document.getElementById('searchCost').value = '100';
+      document.getElementById('searchCost').disabled = true;
+      document.getElementById('searchWrapper').style.opacity = '0.4';
+
+      document.getElementById('uptimeEnabled').checked = false;
+      document.getElementById('uptimeCost').value = '50';
+      document.getElementById('uptimeCost').disabled = true;
+      document.getElementById('uptimeWrapper').style.opacity = '0.4';
+
+      // Clear results
+      document.getElementById('results').style.display = 'none';
+      document.getElementById('results').innerHTML = '';
+      document.getElementById('tool-savings-summary').style.display = 'none';
+      document.getElementById('tier-status-summary').style.display = 'none';
+
+      // Update displays
+      updateDevTimeSavings();
+      updateToolSavings();
+    }
+
+    // Toggle accordion
+    // Save and restore accordion states
+    let accordionStates = {};
+
+    function toggleAccordion(element) {
+      const content = element.nextElementSibling;
+      const isActive = element.classList.contains('active');
+
+      element.classList.toggle('active');
+      content.classList.toggle('active');
+
+      // Save state based on accordion text content
+      const accordionText = element.querySelector('span').textContent.trim();
+      accordionStates[accordionText] = element.classList.contains('active');
+    }
+
+    function saveAccordionStates() {
+      const accordions = document.querySelectorAll('.accordion-header');
+      accordions.forEach(accordion => {
+        const accordionText = accordion.querySelector('span').textContent.trim();
+        accordionStates[accordionText] = accordion.classList.contains('active');
+      });
+    }
+
+    function restoreAccordionStates() {
+      // Wait for DOM to be ready
+      setTimeout(() => {
+        const accordions = document.querySelectorAll('.accordion-header');
+        accordions.forEach(accordion => {
+          const accordionText = accordion.querySelector('span').textContent.trim();
+          if (accordionStates[accordionText]) {
+            const content = accordion.nextElementSibling;
+            accordion.classList.add('active');
+            content.classList.add('active');
+          }
+        });
+      }, 10);
+    }
+
+    // Update price label when pricing period changes
+    document.getElementById('pricingPeriod').addEventListener('change', function() {
+      const period = this.value === 'yearly' ? 'Yearly' : 'Monthly';
+      document.getElementById('priceLabel').textContent = period;
+    });
+
+    // Update labels when resource type changes
+    document.getElementById('resourceType').addEventListener('change', function() {
+      const isPooled = this.value === 'pooled';
+      const suffix = isPooled ? '(total pooled)' : '(per site)';
+      document.getElementById('cpuLabel').textContent = suffix;
+      document.getElementById('phpLabel').textContent = suffix;
+      document.getElementById('ramLabel').textContent = suffix;
+    });
+
+    function compareHosting() {
+      const competitorName = document.getElementById('competitorName').value || 'Competitor';
+      const sites = parseInt(document.getElementById('competitorSites').value);
+      const priceInput = parseFloat(document.getElementById('competitorPrice').value);
+      const pricingPeriod = document.getElementById('pricingPeriod').value;
+      const visitsInput = document.getElementById('competitorVisits').value.trim().toLowerCase();
+      const storage = parseFloat(document.getElementById('competitorStorage').value) || null;
+
+      // Convert to monthly price if yearly was provided
+      const priceMonthly = pricingPeriod === 'yearly' ? priceInput / 12 : priceInput;
+      const priceYearly = pricingPeriod === 'yearly' ? priceInput : priceInput * 12;
+
+      // Technical specs (optional)
+      const resourceType = document.getElementById('resourceType').value;
+      const cpuCoresInput = parseFloat(document.getElementById('competitorCPU').value) || null;
+      const phpWorkersInput = parseInt(document.getElementById('competitorPHPWorkers').value) || null;
+      const ramGBInput = parseFloat(document.getElementById('competitorRAM').value) || null;
+
+      // Handle visits - can be number, "unlimited", or blank
+      let visits = null;
+      let visitsUnlimited = false;
+      if (visitsInput === 'unlimited' || visitsInput === '') {
+        visitsUnlimited = true;
+      } else {
+        visits = parseInt(visitsInput);
+        if (isNaN(visits)) {
+          alert('Visits must be a number, "unlimited", or left blank');
+          return;
+        }
+      }
+
+      // Calculate per-site values based on resource type
+      const cpuCores = cpuCoresInput && resourceType === 'pooled' ? cpuCoresInput / sites : cpuCoresInput;
+      const phpWorkers = phpWorkersInput && resourceType === 'pooled' ? phpWorkersInput / sites : phpWorkersInput;
+      const ramGB = ramGBInput && resourceType === 'pooled' ? ramGBInput / sites : ramGBInput;
+
+      if (!sites || !priceInput) {
+        alert('Please fill in required fields: Number of Sites and Price');
+        return;
+      }
+
+      // Calculate competitor per-site metrics
+      const competitorPerSite = priceMonthly / sites;
+      const competitorPerSiteYear = competitorPerSite * 12;
+      const competitorVisitsPerSite = visits ? visits / sites : null;
+      const competitorStoragePerSite = storage ? storage / sites : null;
+
+      // Find best matching Pressable plan
+      const pressablePlan = findBestPlan('Pressable', sites);
+
+      if (!pressablePlan) {
+        alert('No matching Pressable plan found for that many sites');
+        return;
+      }
+
+      // Calculate Pressable per-site metrics
+      const pressablePerSite = pressablePlan.pricePerSiteMonthly;
+      const pressablePerSiteYear = pressablePlan.pricePerSiteYearly;
+      const pressableVisitsPerSite = pressablePlan.visitsPerMonth / pressablePlan.sites;
+      const pressableStoragePerSite = pressablePlan.storageGB / pressablePlan.sites;
+
+      // Calculate savings/costs
+      const monthlySavings = priceMonthly - pressablePlan.priceMonthly;
+      const yearlySavings = monthlySavings * 12;
+      const perSiteSavings = competitorPerSite - pressablePerSite;
+
+      // Calculate total plugin/tool savings from input fields (only if checkbox is enabled)
+      const securityBackup = document.getElementById('securityBackupEnabled').checked ? (parseFloat(document.getElementById('securityBackupCost').value) || 0) : 0;
+      const performance = document.getElementById('performanceEnabled').checked ? (parseFloat(document.getElementById('performanceCost').value) || 0) : 0;
+      const videoHosting = document.getElementById('videoHostingEnabled').checked ? (parseFloat(document.getElementById('videoHostingCost').value) || 0) : 0;
+      const formsCRM = document.getElementById('formsCRMEnabled').checked ? (parseFloat(document.getElementById('formsCRMCost').value) || 0) : 0;
+      const spamProtection = document.getElementById('spamProtectionEnabled').checked ? (parseFloat(document.getElementById('spamProtectionCost').value) || 0) : 0;
+      const analytics = document.getElementById('analyticsEnabled').checked ? (parseFloat(document.getElementById('analyticsCost').value) || 0) : 0;
+      const socialSharing = document.getElementById('socialSharingEnabled').checked ? (parseFloat(document.getElementById('socialSharingCost').value) || 0) : 0;
+      const search = document.getElementById('searchEnabled').checked ? (parseFloat(document.getElementById('searchCost').value) || 0) : 0;
+      const uptime = document.getElementById('uptimeEnabled').checked ? (parseFloat(document.getElementById('uptimeCost').value) || 0) : 0;
+
+      const totalToolSavings = securityBackup + performance + videoHosting +
+                               formsCRM + spamProtection + analytics + socialSharing + search + uptime;
+
+      // Build categories array for enabled tools
+      const enabledCategories = [];
+      if (securityBackup > 0) enabledCategories.push({ name: 'Security & Backup', cost: securityBackup });
+      if (performance > 0) enabledCategories.push({ name: 'Performance & Optimization', cost: performance });
+      if (videoHosting > 0) enabledCategories.push({ name: 'Video Hosting', cost: videoHosting });
+      if (formsCRM > 0) enabledCategories.push({ name: 'Forms & CRM', cost: formsCRM });
+      if (spamProtection > 0) enabledCategories.push({ name: 'Spam Protection', cost: spamProtection });
+      if (analytics > 0) enabledCategories.push({ name: 'Analytics & Stats', cost: analytics });
+      if (socialSharing > 0) enabledCategories.push({ name: 'Social Media & Sharing', cost: socialSharing });
+      if (search > 0) enabledCategories.push({ name: 'Site Search', cost: search });
+      if (uptime > 0) enabledCategories.push({ name: 'Uptime Monitoring', cost: uptime });
+
+      const toolReplacements = totalToolSavings > 0 ? {
+        totalSavings: totalToolSavings,
+        categories: enabledCategories
+      } : null;
+
+      // Get dev time savings
+      const devHourlyRate = parseFloat(document.getElementById('devHourlyRate').value) || 30;
+      const devHoursPerMonth = parseFloat(document.getElementById('devHoursPerMonth').value) || 2;
+      const devTimeSavingsMonthly = devHourlyRate * devHoursPerMonth;
+      const devTimeSavingsYearly = devTimeSavingsMonthly * 12;
+
+      // Get co-selling value
+      const coSellingProjects = parseFloat(document.getElementById('coSellingProjects').value) || 1;
+      const coSellingProjectValue = parseFloat(document.getElementById('coSellingProjectValue').value) || 10000;
+      const coSellingYearly = coSellingProjects * coSellingProjectValue;
+
+      // Calculate partner tier benefits based on Pressable annual revenue
+      const pressableYearlyRevenue = pressablePlan.priceMonthly * 12;
+      const partnerTierData = calculatePartnerTier(pressableYearlyRevenue);
+
+      // Determine winner
+      const pressableWins = pressablePerSite < competitorPerSite;
+
+      // Display results
+      displayResults({
+        competitorName,
+        competitor: {
+          sites,
+          priceMonthly: priceMonthly,
+          priceYearly: priceYearly,
+          priceInput: priceInput,
+          pricingPeriod: pricingPeriod,
+          pricePerSite: competitorPerSite,
+          pricePerSiteYear: competitorPerSiteYear,
+          visits,
+          visitsUnlimited,
+          visitsPerSite: competitorVisitsPerSite,
+          storage,
+          storagePerSite: competitorStoragePerSite,
+          cpuCores: cpuCores,
+          cpuCoresTotal: cpuCoresInput,
+          phpWorkers: phpWorkers,
+          phpWorkersTotal: phpWorkersInput,
+          ramGB: ramGB,
+          ramGBTotal: ramGBInput,
+          resourceType: resourceType
+        },
+        pressable: {
+          planName: pressablePlan.name,
+          sites: pressablePlan.sites,
+          price: pressablePlan.priceMonthly,
+          pricePerSite: pressablePerSite,
+          pricePerSiteYear: pressablePerSiteYear,
+          visits: pressablePlan.visitsPerMonth,
+          visitsPerSite: pressableVisitsPerSite,
+          storage: pressablePlan.storageGB,
+          storagePerSite: pressableStoragePerSite,
+          cpuCores: pressablePlan.cpuCores,
+          cpuCoresBurst: pressablePlan.cpuCoresBurst,
+          phpWorkers: pressablePlan.phpWorkers,
+          phpWorkersBurst: pressablePlan.phpWorkersBurst,
+          ramGB: pressablePlan.ramMB / 1024,
+          ramGBMax: pressablePlan.ramMBMax / 1024
+        },
+        savings: {
+          monthly: monthlySavings,
+          yearly: yearlySavings,
+          perSite: perSiteSavings
+        },
+        toolReplacements: toolReplacements,
+        devTimeSavings: {
+          hourlyRate: devHourlyRate,
+          hoursPerMonth: devHoursPerMonth,
+          monthly: devTimeSavingsMonthly,
+          yearly: devTimeSavingsYearly
+        },
+        coSelling: {
+          projects: coSellingProjects,
+          valuePerProject: coSellingProjectValue,
+          yearly: coSellingYearly
+        },
+        partnerTier: partnerTierData,
+        pressableWins
+      });
+    }
+
+    function displayResults(data) {
+      const resultsDiv = document.getElementById('results');
+
+      // Save accordion states before updating
+      saveAccordionStates();
+
+      const winnerClass = data.pressableWins ? 'pressable-wins' : 'competitor-wins';
+      const winnerText = data.pressableWins ? 'Pressable Wins' : `${data.competitorName} is Cheaper`;
+
+      const savingsText = data.savings.monthly > 0
+        ? `Save $${Math.abs(data.savings.monthly).toFixed(2)}/month with Pressable`
+        : `Pressable costs $${Math.abs(data.savings.monthly).toFixed(2)}/month more`;
+
+      const perSiteSavingsText = data.savings.perSite > 0
+        ? `$${Math.abs(data.savings.perSite).toFixed(2)} cheaper per site`
+        : `$${Math.abs(data.savings.perSite).toFixed(2)} more expensive per site`;
+
+      // Calculate total savings including tool replacements, dev time, co-selling, and partner tier lead value
+      const toolSavings = data.toolReplacements ? data.toolReplacements.totalSavings : 0;
+      const devSavings = data.devTimeSavings ? data.devTimeSavings.yearly : 0;
+      const coSellingValue = data.coSelling ? data.coSelling.yearly : 0;
+      const leadValue = data.partnerTier ? data.partnerTier.leadValue : 0;
+      const totalYearlySavings = data.savings.yearly + toolSavings + devSavings + coSellingValue + leadValue;
+      const jetpackValuePerSite = data.toolReplacements ? JETPACK_COMPLETE_VALUE : 0;
+
+      resultsDiv.innerHTML = `
+        ${data.toolReplacements ? `
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Plugin/Tool Replacement Savings ($${data.toolReplacements.totalSavings.toLocaleString()}/year)</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 15px; border-radius: 6px; border: 2px solid var(--success-color);">
+                <h3 style="margin: 0 0 10px 0; color: var(--success-color); font-size: 16px;">Jetpack Complete Included Free</h3>
+                <p style="margin: 5px 0; font-size: 13px;">Every Pressable site comes with a free Jetpack Complete license — a $${jetpackValuePerSite.toLocaleString()}/year/site value ($${(jetpackValuePerSite * data.pressable.sites).toLocaleString()}/year for ${data.pressable.sites} sites).</p>
+
+                <div style="margin-top: 12px; padding: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 4px;">
+                  <p style="margin: 0 0 8px 0; font-size: 12px; font-weight: 600; color: var(--success-color);">What's Included:</p>
+                  <ul style="margin: 0; padding-left: 20px; font-size: 11px; color: #2e7d32;">
+                    <li>VaultPress Backup w/ 1TB storage</li>
+                    <li>Scan w/ WAF</li>
+                    <li>Akismet Anti-spam w/ 60k API calls/mo</li>
+                    <li>Stats w/ 100k views/mo (Commercial use)</li>
+                    <li>VideoPress w/ 1TB storage</li>
+                    <li>Boost w/ Auto CSS Generation</li>
+                    <li>Social Advanced w/ unlimited shares</li>
+                    <li>Site Search up to 100k records and 100k requests/mo</li>
+                    <li>CRM Entrepreneur</li>
+                    <li>All Jetpack features</li>
+                    <li>And more</li>
+                  </ul>
+                </div>
+
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(46, 125, 50, 0.3);">
+                  <p style="margin: 5px 0 8px 0; font-size: 12px; font-weight: 600; color: var(--success-color);">Replacing Your Current Costs:</p>
+                  <div style="font-size: 11px; color: #2e7d32;">
+                    ${data.toolReplacements.categories.map(cat => `
+                      <div style="margin: 3px 0; padding: 4px; background: rgba(255, 255, 255, 0.6); border-radius: 3px;">
+                        <strong>${cat.name}:</strong> $${cat.cost.toLocaleString()}/year
+                      </div>
+                    `).join('')}
+                  </div>
+                  <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: var(--success-color);">Total Plugin/Tool Savings: $${data.toolReplacements.totalSavings.toLocaleString()}/year</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        ` : ''}
+
+        ${data.devTimeSavings && data.devTimeSavings.yearly > 0 ? `
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Developer Time Savings ($${data.devTimeSavings.yearly.toLocaleString()}/year)</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 15px; border-radius: 6px; border: 2px solid #1976d2;">
+                <h3 style="margin: 0 0 10px 0; color: #1976d2; font-size: 16px;">Developer Time Savings</h3>
+                <p style="margin: 5px 0; font-size: 13px;">With Pressable's managed hosting, reduce time spent on hosting-related issues</p>
+                <p style="margin: 5px 0; font-size: 13px;"><strong>Estimated Time Saved:</strong> ${data.devTimeSavings.hoursPerMonth} hour${data.devTimeSavings.hoursPerMonth !== 1 ? 's' : ''}/month (${(data.devTimeSavings.hoursPerMonth * 12).toFixed(1)} hours/year)</p>
+                <p style="margin: 5px 0; font-size: 13px;"><strong>Developer Rate:</strong> $${data.devTimeSavings.hourlyRate}/hour</p>
+                <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: #1976d2;">Time Savings Value: $${data.devTimeSavings.yearly.toLocaleString()}/year</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        ` : ''}
+
+        ${data.partnerTier && data.partnerTier.tier !== 'none' && data.partnerTier.tier !== 'emerging' ? `
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Lead Flow (From $${data.partnerTier.leadValue.toLocaleString()}/year)</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <div style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); padding: 15px; border-radius: 6px; border: 2px solid #9c27b0;">
+                <h3 style="margin: 0 0 10px 0; color: #9c27b0; font-size: 16px;">Receive Warm Leads & Close More Ideal Clients</h3>
+                <p style="margin: 5px 0; font-size: 13px;">Pressable hosting qualifies you for <strong>${data.partnerTier.tierName}</strong> status ($${data.partnerTier.iar.toLocaleString()} annual IAR)</p>
+                <p style="margin: 8px 0; font-size: 12px; color: #555; font-style: italic;">${data.partnerTier.description}</p>
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(156, 39, 176, 0.3);">
+                  <p style="margin: 5px 0; font-size: 12px; font-weight: 600; color: #7b1fa2;">What You Get:</p>
+                  <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px; color: #555;">
+                    ${data.partnerTier.tier === 'pro' ? `
+                      <li>Warm, pre-qualified project inquiries delivered to your inbox</li>
+                      <li>Exclusive listings across WordPress.com, WooCommerce, Jetpack & Pressable directories</li>
+                      <li>Built-in credibility from Automattic association (powers 40% of the web)</li>
+                      <li>Priority support, co-marketing opportunities & dedicated partner manager</li>
+                      <li>Advisory board invitation to influence product roadmap</li>
+                    ` : `
+                      <li>Organic visibility in high-traffic Automattic directories</li>
+                      <li>Built-in credibility from Automattic association</li>
+                      <li>Early access to new features & product roadmap input</li>
+                      <li>Training, resources & networking opportunities</li>
+                    `}
+                  </ul>
+                  ${data.partnerTier.leadValue > 0 ? `
+                    <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: #9c27b0;">
+                      Turn visibility into revenue: ${data.partnerTier.totalLeads} qualified lead${data.partnerTier.totalLeads !== 1 ? 's' : ''}/year
+                      ${data.partnerTier.tier === 'pro' ? ` (${data.partnerTier.agencyLeads} organic + ${data.partnerTier.proLeads} referral)` : ''}
+                    </p>
+                    <p style="margin: 5px 0 0 0; font-size: 12px; color: #7b1fa2;">
+                      Estimated annual value: $${data.partnerTier.leadValue.toLocaleString()}
+                    </p>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        ` : data.partnerTier && data.partnerTier.tier === 'emerging' ? `
+        <div style="background: #f3e5f5; padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #ce93d8;">
+          <p style="margin: 0; font-size: 12px; color: #7b1fa2;"><strong>Partner Program:</strong> Account Activated - Access to partner dashboard and foundational benefits</p>
+        </div>
+        ` : ''}
+
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Hosting Comparison</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <h4 style="margin: 0 0 10px 0; color: var(--secondary-color);">Side-by-Side Specs</h4>
+              <div class="comparison-card">
+                <div class="competitor-card">
+                  <div class="card-title">${data.competitorName}</div>
+
+                  <div style="background: rgba(0,0,0,0.03); padding: 8px; margin: 10px -12px; border-radius: 4px;">
+                    <div style="font-weight: 600; font-size: 11px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Bundle</div>
+                    <div class="stat">
+                      <span class="stat-label">Total Sites:</span>
+                      <span class="stat-value">${data.competitor.sites}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Monthly Cost:</span>
+                      <span class="stat-value">$${data.competitor.priceMonthly.toFixed(2)}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Yearly Cost:</span>
+                      <span class="stat-value">$${data.competitor.priceYearly.toFixed(2)}</span>
+                    </div>
+                    ${data.competitor.visitsUnlimited ? `
+                    <div class="stat">
+                      <span class="stat-label">Visits/Month:</span>
+                      <span class="stat-value">Unlimited</span>
+                    </div>` : data.competitor.visits ? `
+                    <div class="stat">
+                      <span class="stat-label">Visits/Month:</span>
+                      <span class="stat-value">${formatNumber(data.competitor.visits)}</span>
+                    </div>` : ''}
+                    ${data.competitor.storage ? `
+                    <div class="stat">
+                      <span class="stat-label">Storage:</span>
+                      <span class="stat-value">${data.competitor.storage} GB</span>
+                    </div>` : ''}
+                  </div>
+
+                  <div style="background: rgba(0,0,0,0.03); padding: 8px; margin: 10px -12px; border-radius: 4px;">
+                    <div style="font-weight: 600; font-size: 11px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Per Site</div>
+                    <div class="stat">
+                      <span class="stat-label">Monthly Cost:</span>
+                      <span class="stat-value">$${data.competitor.pricePerSite.toFixed(2)}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Yearly Cost:</span>
+                      <span class="stat-value">$${data.competitor.pricePerSiteYear.toFixed(2)}</span>
+                    </div>
+                    ${!data.competitor.visitsUnlimited && data.competitor.visits ? `
+                    <div class="stat">
+                      <span class="stat-label">Visits/Month:</span>
+                      <span class="stat-value">${formatNumber(data.competitor.visitsPerSite)}</span>
+                    </div>` : ''}
+                    ${data.competitor.storage ? `
+                    <div class="stat">
+                      <span class="stat-label">Storage:</span>
+                      <span class="stat-value">${data.competitor.storagePerSite.toFixed(2)} GB</span>
+                    </div>` : ''}
+                    ${data.competitor.cpuCores ? `<div class="stat">
+                      <span class="stat-label">CPU Cores:</span>
+                      <span class="stat-value">${data.competitor.resourceType === 'pooled' ? data.competitor.cpuCores.toFixed(1) : data.competitor.cpuCoresTotal}</span>
+                    </div>` : ''}
+                    ${data.competitor.phpWorkers ? `<div class="stat">
+                      <span class="stat-label">PHP Workers:</span>
+                      <span class="stat-value">${data.competitor.resourceType === 'pooled' ? data.competitor.phpWorkers.toFixed(1) : data.competitor.phpWorkersTotal}</span>
+                    </div>` : ''}
+                    ${data.competitor.ramGB ? `<div class="stat">
+                      <span class="stat-label">RAM:</span>
+                      <span class="stat-value">${data.competitor.resourceType === 'pooled' ? data.competitor.ramGB.toFixed(1) + ' GB' : data.competitor.ramGBTotal + ' GB'}</span>
+                    </div>` : ''}
+                  </div>
+                </div>
+
+                <div class="pressable-card">
+                  <div class="card-title">Pressable ${data.pressable.planName}</div>
+
+                  <div style="background: rgba(0,0,0,0.03); padding: 8px; margin: 10px -12px; border-radius: 4px;">
+                    <div style="font-weight: 600; font-size: 11px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Bundle</div>
+                    <div class="stat">
+                      <span class="stat-label">Total Sites:</span>
+                      <span class="stat-value">${data.pressable.sites}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Monthly Cost:</span>
+                      <span class="stat-value">$${data.pressable.price.toFixed(2)}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Yearly Cost:</span>
+                      <span class="stat-value">$${(data.pressable.price * 12).toFixed(2)}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Visits/Month:</span>
+                      <span class="stat-value">${formatNumber(data.pressable.visits)}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Storage:</span>
+                      <span class="stat-value">${data.pressable.storage} GB</span>
+                    </div>
+                  </div>
+
+                  <div style="background: rgba(0,0,0,0.03); padding: 8px; margin: 10px -12px; border-radius: 4px;">
+                    <div style="font-weight: 600; font-size: 11px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Per Site</div>
+                    <div class="stat">
+                      <span class="stat-label">Monthly Cost:</span>
+                      <span class="stat-value">$${data.pressable.pricePerSite.toFixed(2)}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Yearly Cost:</span>
+                      <span class="stat-value">$${data.pressable.pricePerSiteYear.toFixed(2)}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Visits/Month:</span>
+                      <span class="stat-value">${formatNumber(data.pressable.visitsPerSite)}</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">Storage:</span>
+                      <span class="stat-value">${data.pressable.storagePerSite.toFixed(2)} GB</span>
+                    </div>
+                  </div>
+
+                  <div style="background: rgba(0,0,0,0.03); padding: 8px; margin: 10px -12px; border-radius: 4px;">
+                    <div style="font-weight: 600; font-size: 11px; color: #666; text-transform: uppercase; margin-bottom: 8px;">Performance (Per Site)</div>
+                    <div class="stat">
+                      <span class="stat-label">CPU Cores:</span>
+                      <span class="stat-value">${data.pressable.cpuCores} (base) - ${data.pressable.cpuCoresBurst} (autoscale)</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">PHP Workers:</span>
+                      <span class="stat-value">${data.pressable.phpWorkers} (base) - ${data.pressable.phpWorkersBurst} (autoscale)</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-label">RAM:</span>
+                      <span class="stat-value">${data.pressable.ramGB.toFixed(1)} GB (base) - ${data.pressable.ramGBMax} GB (max)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h4 style="margin: 20px 0 10px 0; color: var(--secondary-color);">Price Comparison</h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                  <h5 style="margin: 0 0 10px 0; font-size: 13px; color: var(--secondary-color); text-align: center;">Per Site</h5>
+                  <div class="metric-card">
+                    <div class="metric-title">Monthly Difference</div>
+                    <div class="metric-value" style="color: ${data.savings.perSite > 0 ? '#2e7d32' : '#c62828'}">
+                      ${data.savings.perSite > 0 ? '-' : '+'}$${Math.abs(data.savings.perSite).toFixed(2)}
+                    </div>
+                  </div>
+                  <div class="metric-card" style="margin-top: 10px;">
+                    <div class="metric-title">Yearly Difference</div>
+                    <div class="metric-value" style="color: ${data.savings.perSite * 12 > 0 ? '#2e7d32' : '#c62828'}">
+                      ${data.savings.perSite * 12 > 0 ? '-' : '+'}$${Math.abs(data.savings.perSite * 12).toFixed(2)}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h5 style="margin: 0 0 10px 0; font-size: 13px; color: var(--secondary-color); text-align: center;">Bundle</h5>
+                  <div class="metric-card">
+                    <div class="metric-title">Monthly Difference</div>
+                    <div class="metric-value" style="color: ${data.savings.monthly > 0 ? '#2e7d32' : '#c62828'}">
+                      ${data.savings.monthly > 0 ? '-' : '+'}$${Math.abs(data.savings.monthly).toFixed(2)}
+                    </div>
+                  </div>
+                  <div class="metric-card" style="margin-top: 10px;">
+                    <div class="metric-title">Yearly Difference</div>
+                    <div class="metric-value" style="color: ${data.savings.yearly > 0 ? '#2e7d32' : '#c62828'}">
+                      ${data.savings.yearly > 0 ? '-' : '+'}$${Math.abs(data.savings.yearly).toFixed(2)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h4 style="margin: 20px 0 10px 0; color: var(--secondary-color);">Detailed Comparison</h4>
+              <div class="match-details" style="border: none; padding: 0; margin: 0; background: transparent;">
+                <p><strong>Price per Site:</strong> ${compareMetric(data.pressable.pricePerSite, data.competitor.pricePerSite, true)}</p>
+                ${!data.competitor.visitsUnlimited && data.competitor.visitsPerSite ? `<p><strong>Visits per Site:</strong> ${compareMetric(data.pressable.visitsPerSite, data.competitor.visitsPerSite, false)}</p>` : data.competitor.visitsUnlimited ? `<p><strong>Visits:</strong> <span class="equal">${data.competitorName} offers unlimited visits</span> (Pressable: ${formatNumber(data.pressable.visitsPerSite)} per site)</p>` : ''}
+                ${data.competitor.storagePerSite ? `<p><strong>Storage per Site:</strong> ${compareMetric(data.pressable.storagePerSite, data.competitor.storagePerSite, false)}</p>` : ''}
+                ${data.competitor.cpuCores ? `<p><strong>CPU Cores:</strong> Pressable: ${data.pressable.cpuCores} (base) - ${data.pressable.cpuCoresBurst} (autoscale) | ${data.competitorName}: ${data.competitor.cpuCores} ${compareMetric(data.pressable.cpuCores, data.competitor.cpuCores, false)}</p>` : ''}
+                ${data.competitor.phpWorkers ? `<p><strong>PHP Workers:</strong> Pressable: ${data.pressable.phpWorkers} (base) - ${data.pressable.phpWorkersBurst} (autoscale) | ${data.competitorName}: ${data.competitor.phpWorkers} ${compareMetric(data.pressable.phpWorkers, data.competitor.phpWorkers, false)}</p>` : ''}
+                ${data.competitor.ramGB ? `<p><strong>RAM:</strong> Pressable: ${data.pressable.ramGB.toFixed(1)} GB (base) - ${data.pressable.ramGBMax} GB (max) | ${data.competitorName}: ${data.competitor.ramGB} GB ${compareMetric(data.pressable.ramGB, data.competitor.ramGB, false)}</p>` : ''}
+                ${data.pressable.sites !== data.competitor.sites ? `<p><strong>Note:</strong> Pressable plan includes ${data.pressable.sites} sites (vs ${data.competitor.sites} ${data.competitorName} sites)</p>` : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        ${data.pressableWins ? `
+          <div class="savings">
+            <h3>Total Financial Impact</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px;">
+              <div style="background: white; padding: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 8px 0; color: var(--success-color); font-size: 14px;">Cost Savings</h4>
+                <p style="margin: 5px 0;"><strong>Hosting Price Savings:</strong> <span class="savings-amount">$${Math.abs(data.savings.yearly).toFixed(2)}/year</span></p>
+                ${data.toolReplacements ? `<p style="margin: 5px 0;"><strong>Plugin/Tool Savings:</strong> <span class="savings-amount">$${data.toolReplacements.totalSavings.toLocaleString()}/year</span></p>` : ''}
+                ${data.devTimeSavings && data.devTimeSavings.yearly > 0 ? `<p style="margin: 5px 0;"><strong>Developer Time Recovered:</strong> <span class="savings-amount">$${data.devTimeSavings.yearly.toLocaleString()}/year</span></p>` : ''}
+                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Subtotal Savings: <span class="savings-amount">$${(data.savings.yearly + toolSavings + devSavings).toLocaleString()}/year</span></p>
+              </div>
+              ${(data.partnerTier && data.partnerTier.leadValue > 0) || (data.coSelling && data.coSelling.yearly > 0) ? `
+              <div style="background: white; padding: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 8px 0; color: #9c27b0; font-size: 14px;">Revenue Opportunities</h4>
+                ${data.partnerTier && data.partnerTier.leadValue > 0 ? `
+                <p style="margin: 5px 0;"><strong>Partner Program Leads:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.partnerTier.leadValue.toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">Based on ${data.partnerTier.totalLeads} qualified lead${data.partnerTier.totalLeads !== 1 ? 's' : ''} from ${data.partnerTier.tierName} directory listings</p>
+                ` : ''}
+                ${data.coSelling && data.coSelling.yearly > 0 ? `
+                <p style="margin: 5px 0;"><strong>Co-Selling Projects:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.coSelling.yearly.toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.coSelling.projects} project${data.coSelling.projects !== 1 ? 's' : ''} won with Automattic's sales support</p>
+                ` : ''}
+                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Total Revenue: <span class="savings-amount" style="color: #9c27b0;">$${(leadValue + coSellingValue).toLocaleString()}/year</span></p>
+              </div>
+              ` : '<div></div>'}
+              <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 15px; border-radius: 4px; border: 2px solid var(--success-color); display: flex; flex-direction: column; justify-content: center;">
+                <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--success-color);">Additional Cash Flow</p>
+                <p style="margin: 5px 0 0 0; font-size: 24px; font-weight: 700; color: var(--success-color);">~$${(Math.round(totalYearlySavings / 100) * 100).toLocaleString()}/year</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #2e7d32;">~$${(Math.round((totalYearlySavings / 12) / 100) * 100).toLocaleString()} more per month</p>
+              </div>
+            </div>
+          </div>
+        ` : `
+          <div class="savings" style="border-left-color: #ff9800; background: #fff3e0;">
+            <h3>Total Financial Impact</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px;">
+              <div style="background: white; padding: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 8px 0; color: ${(toolSavings + devSavings) > Math.abs(data.savings.yearly) ? 'var(--success-color)' : '#e65100'}; font-size: 14px;">${(toolSavings + devSavings) > Math.abs(data.savings.yearly) ? 'Net Cost Savings' : 'Hosting Cost Difference'}</h4>
+                <p style="margin: 5px 0;"><strong>Additional Hosting Cost:</strong> <span class="savings-amount" style="color: #e65100;">-$${Math.abs(data.savings.yearly).toFixed(2)}/year</span></p>
+                ${data.toolReplacements || (data.devTimeSavings && data.devTimeSavings.yearly > 0) ? `
+                <p style="margin: 8px 0 5px 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600; font-size: 13px;">But You Gain:</p>
+                ${data.toolReplacements ? `<p style="margin: 5px 0;"><strong>Plugin/Tool Savings:</strong> <span class="savings-amount">+$${data.toolReplacements.totalSavings.toLocaleString()}/year</span></p>` : ''}
+                ${data.devTimeSavings && data.devTimeSavings.yearly > 0 ? `<p style="margin: 5px 0;"><strong>Developer Time:</strong> <span class="savings-amount">+$${data.devTimeSavings.yearly.toLocaleString()}/year</span></p>` : ''}
+                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Net Savings: <span class="savings-amount">${(toolSavings + devSavings) > Math.abs(data.savings.yearly) ? '+' : ''}$${((toolSavings + devSavings) - Math.abs(data.savings.yearly)).toLocaleString()}/year</span></p>
+                ` : ''}
+              </div>
+              ${(data.partnerTier && data.partnerTier.leadValue > 0) || (data.coSelling && data.coSelling.yearly > 0) ? `
+              <div style="background: white; padding: 12px; border-radius: 4px;">
+                <h4 style="margin: 0 0 8px 0; color: #9c27b0; font-size: 14px;">Revenue Opportunities</h4>
+                ${data.partnerTier && data.partnerTier.leadValue > 0 ? `
+                <p style="margin: 5px 0;"><strong>Partner Program Leads:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.partnerTier.leadValue.toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">Based on ${data.partnerTier.totalLeads} qualified lead${data.partnerTier.totalLeads !== 1 ? 's' : ''} from ${data.partnerTier.tierName} directory listings</p>
+                ` : ''}
+                ${data.coSelling && data.coSelling.yearly > 0 ? `
+                <p style="margin: 5px 0;"><strong>Co-Selling Projects:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.coSelling.yearly.toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.coSelling.projects} project${data.coSelling.projects !== 1 ? 's' : ''} won with Automattic's sales support</p>
+                ` : ''}
+                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Total Revenue: <span class="savings-amount" style="color: #9c27b0;">$${(leadValue + coSellingValue).toLocaleString()}/year</span></p>
+              </div>
+              ` : '<div></div>'}
+              <div style="background: linear-gradient(135deg, ${totalYearlySavings > 0 ? '#e8f5e9 0%, #c8e6c9 100%' : '#fff3e0 0%, #ffe0b2 100%'}); padding: 15px; border-radius: 4px; border: 2px solid ${totalYearlySavings > 0 ? 'var(--success-color)' : '#ff9800'}; display: flex; flex-direction: column; justify-content: center;">
+                <p style="margin: 0; font-size: 16px; font-weight: 600; color: ${totalYearlySavings > 0 ? 'var(--success-color)' : '#e65100'};">Net Impact</p>
+                <p style="margin: 5px 0 0 0; font-size: 24px; font-weight: 700; color: ${totalYearlySavings > 0 ? 'var(--success-color)' : '#e65100'};">${totalYearlySavings > 0 ? '+' : ''}~$${(Math.round(totalYearlySavings / 100) * 100).toLocaleString()}/year</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: ${totalYearlySavings > 0 ? '#2e7d32' : '#e65100'};">${totalYearlySavings > 0 ? `~$${(Math.round((totalYearlySavings / 12) / 100) * 100).toLocaleString()} more per month` : `Premium hosting with better support & reliability`}</p>
+              </div>
+            </div>
+          </div>
+        `}
+      `;
+
+      resultsDiv.style.display = 'block';
+
+      // Restore accordion states after displaying results
+      restoreAccordionStates();
+    }
+
+    function compareMetric(pressableValue, competitorValue, lowerIsBetter) {
+      const diff = pressableValue - competitorValue;
+      const percentDiff = ((diff / competitorValue) * 100).toFixed(1);
+
+      if (Math.abs(diff) < 0.01) {
+        return `<span class="equal">≈ ${Math.abs(percentDiff)}%</span>`;
+      }
+
+      const pressableBetter = lowerIsBetter ? (pressableValue < competitorValue) : (pressableValue > competitorValue);
+
+      if (pressableBetter) {
+        return `<span class="better">▲ ${Math.abs(percentDiff)}% ${lowerIsBetter ? 'lower' : 'higher'}</span>`;
+      } else {
+        return `<span class="worse">▼ ${Math.abs(percentDiff)}% ${lowerIsBetter ? 'higher' : 'lower'}</span>`;
+      }
+    }
+
+    function formatNumber(num) {
+      if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+      } else if (num >= 1000) {
+        return (num / 1000).toFixed(0) + 'K';
+      }
+      return num.toString();
+    }
+
+    // Toggle tool category styling when checkbox changes
+    function toggleToolCategory(categoryName) {
+      const checkbox = document.getElementById(categoryName + 'Enabled');
+      const wrapper = document.getElementById(categoryName + 'Wrapper');
+      const input = document.getElementById(categoryName + 'Cost');
+
+      if (checkbox.checked) {
+        // Enable: full opacity, enable input
+        wrapper.style.opacity = '1';
+        input.disabled = false;
+      } else {
+        // Disable: reduced opacity, disable input
+        wrapper.style.opacity = '0.4';
+        input.disabled = true;
+      }
+
+      // Update the total savings
+      updateToolSavings();
+    }
+
+    // Update tool savings calculation
+    function updateToolSavings() {
+      const securityBackup = document.getElementById('securityBackupEnabled').checked ? (parseFloat(document.getElementById('securityBackupCost').value) || 0) : 0;
+      const performance = document.getElementById('performanceEnabled').checked ? (parseFloat(document.getElementById('performanceCost').value) || 0) : 0;
+      const videoHosting = document.getElementById('videoHostingEnabled').checked ? (parseFloat(document.getElementById('videoHostingCost').value) || 0) : 0;
+      const formsCRM = document.getElementById('formsCRMEnabled').checked ? (parseFloat(document.getElementById('formsCRMCost').value) || 0) : 0;
+      const spamProtection = document.getElementById('spamProtectionEnabled').checked ? (parseFloat(document.getElementById('spamProtectionCost').value) || 0) : 0;
+      const analytics = document.getElementById('analyticsEnabled').checked ? (parseFloat(document.getElementById('analyticsCost').value) || 0) : 0;
+      const socialSharing = document.getElementById('socialSharingEnabled').checked ? (parseFloat(document.getElementById('socialSharingCost').value) || 0) : 0;
+      const search = document.getElementById('searchEnabled').checked ? (parseFloat(document.getElementById('searchCost').value) || 0) : 0;
+      const uptime = document.getElementById('uptimeEnabled').checked ? (parseFloat(document.getElementById('uptimeCost').value) || 0) : 0;
+
+      const totalSavings = securityBackup + performance + videoHosting +
+                          formsCRM + spamProtection + analytics + socialSharing + search + uptime;
+
+      document.getElementById('tool-savings-amount').textContent = `$${totalSavings.toLocaleString()}/year`;
+
+      // Trigger auto-compare to update results
+      autoCompare();
+    }
+
+    // Update dev time savings calculation
+    function updateDevTimeSavings() {
+      const hourlyRate = parseFloat(document.getElementById('devHourlyRate').value) || 30;
+      const hoursPerMonth = parseFloat(document.getElementById('devHoursPerMonth').value) || 2;
+
+      const monthlySavings = hourlyRate * hoursPerMonth;
+      const annualSavings = monthlySavings * 12;
+
+      document.getElementById('dev-time-amount').textContent = `$${annualSavings.toLocaleString()}/year`;
+
+      // Trigger auto-compare to update results
+      autoCompare();
+    }
+
+    // Update co-selling calculation
+    function updateCoSelling() {
+      const projects = parseFloat(document.getElementById('coSellingProjects').value) || 1;
+      const valuePerProject = parseFloat(document.getElementById('coSellingProjectValue').value) || 10000;
+
+      const annualValue = projects * valuePerProject;
+
+      document.getElementById('coSellingTotalValue').textContent = `$${annualValue.toLocaleString()}/year`;
+
+      // Trigger auto-compare to update results
+      autoCompare();
+    }
+
+    // Calculate partner tier based on Pressable plan IAR
+    function calculatePartnerTier(pressableYearlyRevenue) {
+      // Get number of leads and value per lead
+      const agencyLeads = parseFloat(document.getElementById('agencyPartnerLeads').value) || 1;
+      const agencyValuePerLead = parseFloat(document.getElementById('agencyPartnerLeadValue').value) || 10000;
+      const proLeads = parseFloat(document.getElementById('proPartnerLeads').value) || 1;
+      const proValuePerLead = parseFloat(document.getElementById('proPartnerLeadValue').value) || 15000;
+
+      // Calculate total values
+      const agencyTotalValue = agencyLeads * agencyValuePerLead;
+      const proTotalValue = proLeads * proValuePerLead;
+
+      // Update the total value displays
+      document.getElementById('agencyTotalValue').textContent = `$${agencyTotalValue.toLocaleString()}`;
+      document.getElementById('proTotalValue').textContent = `$${proTotalValue.toLocaleString()}`;
+
+      let tier = 'none';
+      let tierName = 'No Tier';
+      let leadValue = 0;
+      let totalLeads = 0;
+      let description = '';
+
+      if (pressableYearlyRevenue >= 5000) {
+        tier = 'pro';
+        tierName = 'Pro Partner';
+        leadValue = agencyTotalValue + proTotalValue; // Total lead value
+        totalLeads = agencyLeads + proLeads;
+        description = `Warm, decision-ready leads from directory visibility + pre-qualified referrals delivered to your inbox`;
+      } else if (pressableYearlyRevenue >= 1200) {
+        tier = 'agency';
+        tierName = 'Agency Partner';
+        leadValue = agencyTotalValue;
+        totalLeads = agencyLeads;
+        description = `Organic lead flow from exclusive directory listings across WordPress.com, WooCommerce, Jetpack & Pressable`;
+      } else if (pressableYearlyRevenue > 0) {
+        tier = 'emerging';
+        tierName = 'Account Activated';
+        leadValue = 0;
+        totalLeads = 0;
+        description = 'Access to partner dashboard and foundational benefits';
+      }
+
+      // Update tier summary display
+      const tierSummary = document.getElementById('tier-status-summary');
+      const tierStatusText = document.getElementById('tier-status-text');
+      const tierLeadValueText = document.getElementById('tier-lead-value');
+
+      if (tier !== 'none') {
+        tierSummary.style.display = 'block';
+        tierStatusText.textContent = `${tierName} ($${pressableYearlyRevenue.toLocaleString()} annual IAR)`;
+        tierLeadValueText.textContent = leadValue > 0 ? description : description;
+      } else {
+        tierSummary.style.display = 'none';
+      }
+
+      return {
+        tier,
+        tierName,
+        leadValue,
+        totalLeads,
+        agencyLeads,
+        proLeads,
+        agencyValuePerLead,
+        proValuePerLead,
+        description,
+        iar: pressableYearlyRevenue
+      };
+    }
+
+    // Update tier display when lead values change
+    function updateTierDisplay() {
+      // Update the total value displays immediately
+      const agencyLeads = parseFloat(document.getElementById('agencyPartnerLeads').value) || 1;
+      const agencyValuePerLead = parseFloat(document.getElementById('agencyPartnerLeadValue').value) || 10000;
+      const proLeads = parseFloat(document.getElementById('proPartnerLeads').value) || 1;
+      const proValuePerLead = parseFloat(document.getElementById('proPartnerLeadValue').value) || 15000;
+
+      const agencyTotalValue = agencyLeads * agencyValuePerLead;
+      const proTotalValue = proLeads * proValuePerLead;
+
+      document.getElementById('agencyTotalValue').textContent = `$${agencyTotalValue.toLocaleString()}`;
+      document.getElementById('proTotalValue').textContent = `$${proTotalValue.toLocaleString()}`;
+
+      // Trigger recalculation
+      autoCompare();
+    }
+
+    // Auto-compare when required fields are filled
+    function autoCompare() {
+      const sites = parseInt(document.getElementById('competitorSites').value);
+      const priceInput = parseFloat(document.getElementById('competitorPrice').value);
+
+      // Only auto-compare if both sites and price are provided
+      if (sites && priceInput) {
+        compareHosting();
+      }
+    }
+
+    // Add event listeners for auto-comparison
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize competitor name with default value
+      document.getElementById('competitorName').value = 'WP Engine';
+
+      // Initialize tool savings display
+      updateToolSavings();
+
+      // Add event listeners for tool cost inputs
+      const toolInputs = [
+        'securityBackupCost',
+        'performanceCost',
+        'videoHostingCost',
+        'formsCRMCost',
+        'spamProtectionCost',
+        'analyticsCost',
+        'socialSharingCost',
+        'searchCost',
+        'uptimeCost'
+      ];
+
+      toolInputs.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener('input', updateToolSavings);
+          element.addEventListener('change', updateToolSavings);
+        }
+      });
+
+      const inputs = [
+        'competitorNameSelect',
+        'competitorName',
+        'competitorSites',
+        'pricingPeriod',
+        'competitorPrice',
+        'competitorVisits',
+        'competitorStorage',
+        'resourceType',
+        'competitorCPU',
+        'competitorPHPWorkers',
+        'competitorRAM'
+      ];
+
+      inputs.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener('input', autoCompare);
+          element.addEventListener('change', autoCompare);
+        }
+      });
+
+      // Add event listeners for dev time fields
+      const devHourlyRate = document.getElementById('devHourlyRate');
+      const devHoursPerMonth = document.getElementById('devHoursPerMonth');
+
+      if (devHourlyRate) {
+        devHourlyRate.addEventListener('input', updateDevTimeSavings);
+        devHourlyRate.addEventListener('change', updateDevTimeSavings);
+      }
+
+      if (devHoursPerMonth) {
+        devHoursPerMonth.addEventListener('input', updateDevTimeSavings);
+        devHoursPerMonth.addEventListener('change', updateDevTimeSavings);
+      }
+
+      // Add co-selling event listeners
+      const coSellingProjects = document.getElementById('coSellingProjects');
+      const coSellingProjectValue = document.getElementById('coSellingProjectValue');
+
+      if (coSellingProjects) {
+        coSellingProjects.addEventListener('input', updateCoSelling);
+        coSellingProjects.addEventListener('change', updateCoSelling);
+      }
+
+      if (coSellingProjectValue) {
+        coSellingProjectValue.addEventListener('input', updateCoSelling);
+        coSellingProjectValue.addEventListener('change', updateCoSelling);
+      }
+
+      // Add event listeners for partner tier lead fields
+      const leadInputs = [
+        'agencyPartnerLeads',
+        'agencyPartnerLeadValue',
+        'proPartnerLeads',
+        'proPartnerLeadValue'
+      ];
+
+      leadInputs.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener('input', updateTierDisplay);
+          element.addEventListener('change', updateTierDisplay);
+        }
+      });
+
+      // Initialize dev time savings display
+      updateDevTimeSavings();
+
+      // Trigger initial calculation if we have default values
+      // This will show comparison immediately on page load
+      const sites = parseInt(document.getElementById('competitorSites').value);
+      if (sites) {
+        // Small delay to ensure all elements are ready
+        setTimeout(() => {
+          autoCompare();
+        }, 100);
+      }
+    });
+  </script>
+</body>
+</html>
