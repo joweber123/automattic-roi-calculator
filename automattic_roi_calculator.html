@@ -1724,12 +1724,12 @@ const JETPACK_COMPLETE_VALUE = 899;
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px;">
               <div style="background: white; padding: 12px; border-radius: 4px;">
                 <h4 style="margin: 0 0 8px 0; color: ${(toolSavings + devSavings) > Math.abs(data.savings.yearly) ? 'var(--success-color)' : '#e65100'}; font-size: 14px;">${(toolSavings + devSavings) > Math.abs(data.savings.yearly) ? 'Net Cost Savings' : 'Hosting Cost Difference'}</h4>
-                <p style="margin: 5px 0;"><strong>Additional Hosting Cost:</strong> <span class="savings-amount" style="color: #e65100;">-$${Math.abs(data.savings.yearly).toFixed(2)}/year</span></p>
+                <p style="margin: 5px 0;"><strong>Additional Hosting Cost:</strong> <span class="savings-amount" style="color: #e65100;">+$${Math.abs(data.savings.yearly).toFixed(2)}/year</span></p>
                 ${data.toolReplacements || (data.devTimeSavings && data.devTimeSavings.yearly > 0) ? `
                 <p style="margin: 8px 0 5px 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600; font-size: 13px;">But You Gain:</p>
                 ${data.toolReplacements ? `<p style="margin: 5px 0;"><strong>Plugin/Tool Savings:</strong> <span class="savings-amount">+$${data.toolReplacements.totalSavings.toLocaleString()}/year</span></p>` : ''}
                 ${data.devTimeSavings && data.devTimeSavings.yearly > 0 ? `<p style="margin: 5px 0;"><strong>Developer Time:</strong> <span class="savings-amount">+$${data.devTimeSavings.yearly.toLocaleString()}/year</span></p>` : ''}
-                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Net Savings: <span class="savings-amount">${(toolSavings + devSavings) > Math.abs(data.savings.yearly) ? '+' : ''}$${((toolSavings + devSavings) - Math.abs(data.savings.yearly)).toLocaleString()}/year</span></p>
+                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">${((toolSavings + devSavings) - Math.abs(data.savings.yearly)) >= 0 ? 'Net Savings' : 'Net Additional Cost'}: <span class="savings-amount" style="color: ${((toolSavings + devSavings) - Math.abs(data.savings.yearly)) >= 0 ? 'var(--success-color)' : '#e65100'};">${((toolSavings + devSavings) - Math.abs(data.savings.yearly)) >= 0 ? '+' : ''}$${((toolSavings + devSavings) - Math.abs(data.savings.yearly)).toLocaleString()}/year</span></p>
                 ` : ''}
               </div>
               ${(data.partnerTier && data.partnerTier.leadValue > 0) || (data.coSelling && data.coSelling.yearly > 0) || (data.revenueOpportunity && data.revenueOpportunity.yearly > 0) ? `
