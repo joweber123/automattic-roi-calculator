@@ -1690,7 +1690,7 @@ const JETPACK_COMPLETE_VALUE = 899;
                 <p style="margin: 5px 0;"><strong>Directory Listing Leads:</strong> <span class="savings-amount" style="color: #9c27b0;">$${(data.partnerTier.agencyLeads * data.partnerTier.agencyValuePerLead).toLocaleString()}/year</span></p>
                 <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.partnerTier.agencyLeads} organic lead${data.partnerTier.agencyLeads !== 1 ? 's' : ''} from ${data.partnerTier.tierName} directory visibility</p>
                 ` : ''}
-                ${data.partnerTier && data.partnerTier.tier === 'pro' && data.partnerTier.proLeads > 0 ? `
+                ${data.partnerTier && (data.partnerTier.tier === 'pro' || data.partnerTier.isProVisible) && data.partnerTier.proLeads > 0 ? `
                 <p style="margin: 5px 0;"><strong>Referral Leads (Sent to You):</strong> <span class="savings-amount" style="color: #9c27b0;">$${(data.partnerTier.proLeads * data.partnerTier.proValuePerLead).toLocaleString()}/year</span></p>
                 <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.partnerTier.proLeads} pre-qualified referral${data.partnerTier.proLeads !== 1 ? 's' : ''} delivered to your inbox</p>
                 ` : ''}
@@ -1733,7 +1733,7 @@ const JETPACK_COMPLETE_VALUE = 899;
                 <p style="margin: 5px 0;"><strong>Directory Listing Leads:</strong> <span class="savings-amount" style="color: #9c27b0;">$${(data.partnerTier.agencyLeads * data.partnerTier.agencyValuePerLead).toLocaleString()}/year</span></p>
                 <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.partnerTier.agencyLeads} organic lead${data.partnerTier.agencyLeads !== 1 ? 's' : ''} from ${data.partnerTier.tierName} directory visibility</p>
                 ` : ''}
-                ${data.partnerTier && data.partnerTier.tier === 'pro' && data.partnerTier.proLeads > 0 ? `
+                ${data.partnerTier && (data.partnerTier.tier === 'pro' || data.partnerTier.isProVisible) && data.partnerTier.proLeads > 0 ? `
                 <p style="margin: 5px 0;"><strong>Referral Leads (Sent to You):</strong> <span class="savings-amount" style="color: #9c27b0;">$${(data.partnerTier.proLeads * data.partnerTier.proValuePerLead).toLocaleString()}/year</span></p>
                 <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.partnerTier.proLeads} pre-qualified referral${data.partnerTier.proLeads !== 1 ? 's' : ''} delivered to your inbox</p>
                 ` : ''}
@@ -2001,7 +2001,8 @@ const JETPACK_COMPLETE_VALUE = 899;
         agencyValuePerLead,
         proValuePerLead,
         description,
-        iar: pressableYearlyRevenue
+        iar: pressableYearlyRevenue,
+        isProVisible: isProVisible
       };
     }
 
