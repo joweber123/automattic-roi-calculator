@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Automattic for Agencies ROI Calculator</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="{{ module_asset_url('favicon.ico') || 'favicon.ico' }}" type="image/x-icon">
   <style>
     :root {
       --primary-color: #1590c7;
@@ -397,7 +397,7 @@
       // Set logo src based on environment
       (function() {
         const logoImg = document.getElementById('agenciesLogo');
-        const hubspotUrl = "{{ get_asset_url('/Blank Template/automattic-for-agencies-logo.jpeg') }}";
+        const hubspotUrl = "{{ module_asset_url('automattic-for-agencies-logo.jpeg') }}";
         // If HubSpot template was processed, it won't contain the curly braces
         if (!hubspotUrl.includes('{{')) {
           logoImg.src = hubspotUrl;
