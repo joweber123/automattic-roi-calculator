@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Automattic for Agencies ROI Calculator</title>
-  <link rel="icon" href="{{ module_asset_url('favicon.ico') || 'favicon.ico' }}" type="image/x-icon">
+  <link rel="icon" id="faviconLink" href="favicon.ico" type="image/x-icon">
+  <script>
+    // Set favicon based on environment
+    (function() {
+      const faviconLink = document.getElementById('faviconLink');
+      const hubspotUrl = "{{ module_asset_url('favicon.ico') }}";
+      if (!hubspotUrl.includes('{{')) {
+        faviconLink.href = hubspotUrl;
+      }
+    })();
+  </script>
   <style>
     :root {
       --primary-color: #1590c7;
