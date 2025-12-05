@@ -386,10 +386,7 @@
     <div class="main-layout">
       <div class="input-column">
         <div class="input-section">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 style="margin: 0; color: var(--secondary-color); font-weight: 600;">Hosting Costs</h3>
-        <button onclick="clearAllFields()" style="background: #6c757d; padding: 6px 12px; font-size: 12px; margin: 0; width: auto;">Clear All</button>
-      </div>
+      <h3 style="margin: 0 0 15px 0; color: var(--secondary-color); font-weight: 600;">Hosting Costs</h3>
 
       <div class="input-group">
         <label for="competitorName">Hosting Provider</label>
@@ -507,7 +504,17 @@
                       <span style="font-weight: 600;">Security & Backup</span>
                       <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Wordfence, Sucuri, UpdraftPlus, WP Engine Security Add-on</span>
                     </label>
-                    <input type="number" id="securityBackupCost" placeholder="150" value="150" step="50">
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                      <input type="number" id="securityBackupCost" placeholder="150" value="150" step="50" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="updateToolSavings()" oninput="updateToolSavings()">
+                      <select id="securityBackupPeriod" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()">
+                        <option value="yearly" selected>per year</option>
+                        <option value="monthly">per month</option>
+                      </select>
+                      <select id="securityBackupType" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()">
+                        <option value="per-site" selected>per site</option>
+                        <option value="bulk">all sites</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -518,7 +525,17 @@
                       <span style="font-weight: 600;">Performance & Optimization</span>
                       <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">WP Rocket, NitroPack, Smush, WP Engine Speed Boost</span>
                     </label>
-                    <input type="number" id="performanceCost" placeholder="50" value="50" step="50">
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                      <input type="number" id="performanceCost" placeholder="50" value="50" step="50" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="updateToolSavings()" oninput="updateToolSavings()">
+                      <select id="performancePeriod" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()">
+                        <option value="yearly" selected>per year</option>
+                        <option value="monthly">per month</option>
+                      </select>
+                      <select id="performanceType" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()">
+                        <option value="per-site" selected>per site</option>
+                        <option value="bulk">all sites</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -529,7 +546,17 @@
                       <span style="font-weight: 600;">Video Hosting</span>
                       <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Vimeo, Wistia</span>
                     </label>
-                    <input type="number" id="videoHostingCost" placeholder="200" value="200" step="50" disabled>
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                      <input type="number" id="videoHostingCost" placeholder="200" value="200" step="50" disabled style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="updateToolSavings()" oninput="updateToolSavings()">
+                      <select id="videoHostingPeriod" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="yearly" selected>per year</option>
+                        <option value="monthly">per month</option>
+                      </select>
+                      <select id="videoHostingType" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="per-site" selected>per site</option>
+                        <option value="bulk">all sites</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -540,7 +567,17 @@
                       <span style="font-weight: 600;">Forms & CRM</span>
                       <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Gravity Forms, WPForms, HubSpot</span>
                     </label>
-                    <input type="number" id="formsCRMCost" placeholder="50" value="50" step="50" disabled>
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                      <input type="number" id="formsCRMCost" placeholder="50" value="50" step="50" disabled style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="updateToolSavings()" oninput="updateToolSavings()">
+                      <select id="formsCRMPeriod" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="yearly" selected>per year</option>
+                        <option value="monthly">per month</option>
+                      </select>
+                      <select id="formsCRMType" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="per-site" selected>per site</option>
+                        <option value="bulk">all sites</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -551,7 +588,17 @@
                       <span style="font-weight: 600;">Spam Protection</span>
                       <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Akismet Plus, CleanTalk</span>
                     </label>
-                    <input type="number" id="spamProtectionCost" placeholder="50" value="50" step="50" disabled>
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                      <input type="number" id="spamProtectionCost" placeholder="50" value="50" step="50" disabled style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="updateToolSavings()" oninput="updateToolSavings()">
+                      <select id="spamProtectionPeriod" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="yearly" selected>per year</option>
+                        <option value="monthly">per month</option>
+                      </select>
+                      <select id="spamProtectionType" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="per-site" selected>per site</option>
+                        <option value="bulk">all sites</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -562,7 +609,17 @@
                       <span style="font-weight: 600;">Analytics & Stats</span>
                       <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">MonsterInsights, ExactMetrics</span>
                     </label>
-                    <input type="number" id="analyticsCost" placeholder="150" value="150" step="50" disabled>
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                      <input type="number" id="analyticsCost" placeholder="150" value="150" step="50" disabled style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="updateToolSavings()" oninput="updateToolSavings()">
+                      <select id="analyticsPeriod" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="yearly" selected>per year</option>
+                        <option value="monthly">per month</option>
+                      </select>
+                      <select id="analyticsType" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="per-site" selected>per site</option>
+                        <option value="bulk">all sites</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -573,7 +630,17 @@
                       <span style="font-weight: 600;">Social Media & Sharing</span>
                       <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">Buffer, Hootsuite, Blog2Social</span>
                     </label>
-                    <input type="number" id="socialSharingCost" placeholder="50" value="50" step="50" disabled>
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                      <input type="number" id="socialSharingCost" placeholder="50" value="50" step="50" disabled style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="updateToolSavings()" oninput="updateToolSavings()">
+                      <select id="socialSharingPeriod" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="yearly" selected>per year</option>
+                        <option value="monthly">per month</option>
+                      </select>
+                      <select id="socialSharingType" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="per-site" selected>per site</option>
+                        <option value="bulk">all sites</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -584,7 +651,17 @@
                       <span style="font-weight: 600;">Site Search</span>
                       <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">SearchWP, Relevanssi, Algolia</span>
                     </label>
-                    <input type="number" id="searchCost" placeholder="100" value="100" step="50" disabled>
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                      <input type="number" id="searchCost" placeholder="100" value="100" step="50" disabled style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="updateToolSavings()" oninput="updateToolSavings()">
+                      <select id="searchPeriod" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="yearly" selected>per year</option>
+                        <option value="monthly">per month</option>
+                      </select>
+                      <select id="searchType" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="per-site" selected>per site</option>
+                        <option value="bulk">all sites</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -595,14 +672,25 @@
                       <span style="font-weight: 600;">Uptime Monitoring</span>
                       <span style="font-size: 11px; color: #666; display: block; font-weight: 400;">UptimeRobot Pro, Pingdom</span>
                     </label>
-                    <input type="number" id="uptimeCost" placeholder="50" value="50" step="50" disabled>
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                      <input type="number" id="uptimeCost" placeholder="50" value="50" step="50" disabled style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="updateToolSavings()" oninput="updateToolSavings()">
+                      <select id="uptimePeriod" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="yearly" selected>per year</option>
+                        <option value="monthly">per month</option>
+                      </select>
+                      <select id="uptimeType" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; background: white;" onchange="updateToolSavings()" disabled>
+                        <option value="per-site" selected>per site</option>
+                        <option value="bulk">all sites</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div id="tool-savings-summary" style="margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 4px; border: 1px solid var(--success-color);">
-                <div style="font-size: 12px; font-weight: 600; color: var(--success-color);">Total Plugin/Tool Savings:</div>
+                <div style="font-size: 12px; font-weight: 600; color: var(--success-color);">Total Plugin/Tool Savings (all sites):</div>
                 <div id="tool-savings-amount" style="font-size: 16px; font-weight: 600; color: var(--success-color);">$200/year</div>
+                <div style="font-size: 11px; color: #666; margin-top: 4px;">Total calculated based on your selected period and type (per-site or all sites)</div>
               </div>
             </div>
           </div>
@@ -637,6 +725,34 @@
 
         <div class="accordion" style="margin-top: 15px;">
           <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Time Reinvestment</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">Your recovered developer time is your new sales resource. You can now reinvest that time into winning new business</p>
+
+              <div class="input-group">
+                <label for="additionalSitesPerYear">Additional Sites You Can Win Per Year</label>
+                <input type="number" id="additionalSitesPerYear" placeholder="1" value="1" step="1" min="0">
+              </div>
+
+              <div class="input-group">
+                <label for="averageRevenuePerSite">Average Annual Revenue Per Site ($)</label>
+                <input type="number" id="averageRevenuePerSite" placeholder="10000" value="10000" step="500" min="0">
+              </div>
+
+              <div id="revenue-opportunity-summary" style="margin-top: 10px; padding: 10px; background: #f3e5f5; border-radius: 4px; border: 1px solid #9c27b0;">
+                <div style="font-size: 12px; font-weight: 600; color: #9c27b0;">Additional Annual Revenue Opportunity:</div>
+                <div id="revenue-opportunity-amount" style="font-size: 16px; font-weight: 600; color: #9c27b0;">$10,000/year</div>
+                <div style="font-size: 11px; color: #7b1fa2; margin-top: 4px;">By reinvesting saved time into business growth</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" style="margin-top: 15px;">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
             <span>Partner Program Lead Values</span>
             <span class="accordion-icon">▼</span>
           </div>
@@ -660,7 +776,13 @@
                 </div>
               </div>
 
-              <div style="background: white; padding: 12px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 12px;">
+              <div id="pro-partner-toggle-btn" style="margin-bottom: 12px; display: none;">
+                <button onclick="toggleProPartnerEstimate()" style="width: 100%; padding: 12px; background: white; color: #9c27b0; border: 2px solid #9c27b0; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s;">
+                  Estimate Pro Partner Status ($5,000+ IAR)
+                </button>
+              </div>
+
+              <div id="pro-partner-section" style="background: white; padding: 12px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 12px; display: none;">
                 <h4 style="margin: 0 0 10px 0; font-size: 13px; color: var(--secondary-color);">Pro Partner Additional ($5,000+ IAR)</h4>
                 <div class="input-group">
                   <label for="proPartnerLeads">Additional leads/year</label>
@@ -710,6 +832,12 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; display: flex; gap: 10px;">
+          <button onclick="openPersonalizationModal()" style="flex: 1; background: white; color: #333; padding: 12px; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600;">Personalize</button>
+          <button onclick="copyShareableURL()" style="flex: 1; background: white; color: #333; padding: 12px; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600;">Share</button>
+          <button onclick="clearAllFields()" style="flex: 1; background: white; color: #333; padding: 12px; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600;">Clear All</button>
         </div>
       </div>
 
@@ -966,6 +1094,7 @@ const JETPACK_COMPLETE_VALUE = 899;
     });
 
     function compareHosting() {
+      const agencyName = document.getElementById('agencyName').value.trim() || '';
       const competitorName = document.getElementById('competitorName').value || 'Competitor';
       const sites = parseInt(document.getElementById('competitorSites').value);
       const priceInput = parseFloat(document.getElementById('competitorPrice').value);
@@ -1031,34 +1160,39 @@ const JETPACK_COMPLETE_VALUE = 899;
       const yearlySavings = monthlySavings * 12;
       const perSiteSavings = competitorPerSite - pressablePerSite;
 
-      // Calculate total plugin/tool savings from input fields (only if checkbox is enabled)
-      const securityBackup = document.getElementById('securityBackupEnabled').checked ? (parseFloat(document.getElementById('securityBackupCost').value) || 0) : 0;
-      const performance = document.getElementById('performanceEnabled').checked ? (parseFloat(document.getElementById('performanceCost').value) || 0) : 0;
-      const videoHosting = document.getElementById('videoHostingEnabled').checked ? (parseFloat(document.getElementById('videoHostingCost').value) || 0) : 0;
-      const formsCRM = document.getElementById('formsCRMEnabled').checked ? (parseFloat(document.getElementById('formsCRMCost').value) || 0) : 0;
-      const spamProtection = document.getElementById('spamProtectionEnabled').checked ? (parseFloat(document.getElementById('spamProtectionCost').value) || 0) : 0;
-      const analytics = document.getElementById('analyticsEnabled').checked ? (parseFloat(document.getElementById('analyticsCost').value) || 0) : 0;
-      const socialSharing = document.getElementById('socialSharingEnabled').checked ? (parseFloat(document.getElementById('socialSharingCost').value) || 0) : 0;
-      const search = document.getElementById('searchEnabled').checked ? (parseFloat(document.getElementById('searchCost').value) || 0) : 0;
-      const uptime = document.getElementById('uptimeEnabled').checked ? (parseFloat(document.getElementById('uptimeCost').value) || 0) : 0;
+      // Calculate total plugin/tool savings using normalized costs (handles monthly/yearly and per-site/bulk)
+      const securityBackup = calculateNormalizedToolCost('securityBackup');
+      const performance = calculateNormalizedToolCost('performance');
+      const videoHosting = calculateNormalizedToolCost('videoHosting');
+      const formsCRM = calculateNormalizedToolCost('formsCRM');
+      const spamProtection = calculateNormalizedToolCost('spamProtection');
+      const analytics = calculateNormalizedToolCost('analytics');
+      const socialSharing = calculateNormalizedToolCost('socialSharing');
+      const search = calculateNormalizedToolCost('search');
+      const uptime = calculateNormalizedToolCost('uptime');
 
-      const totalToolSavings = securityBackup + performance + videoHosting +
+      // Calculate per-site tool savings (all values are already normalized to annual per-site costs)
+      const toolSavingsPerSite = securityBackup + performance + videoHosting +
                                formsCRM + spamProtection + analytics + socialSharing + search + uptime;
 
-      // Build categories array for enabled tools
+      // Multiply by number of sites to get total tool savings
+      const totalToolSavings = toolSavingsPerSite * sites;
+
+      // Build categories array for enabled tools (showing per-site costs)
       const enabledCategories = [];
-      if (securityBackup > 0) enabledCategories.push({ name: 'Security & Backup', cost: securityBackup });
-      if (performance > 0) enabledCategories.push({ name: 'Performance & Optimization', cost: performance });
-      if (videoHosting > 0) enabledCategories.push({ name: 'Video Hosting', cost: videoHosting });
-      if (formsCRM > 0) enabledCategories.push({ name: 'Forms & CRM', cost: formsCRM });
-      if (spamProtection > 0) enabledCategories.push({ name: 'Spam Protection', cost: spamProtection });
-      if (analytics > 0) enabledCategories.push({ name: 'Analytics & Stats', cost: analytics });
-      if (socialSharing > 0) enabledCategories.push({ name: 'Social Media & Sharing', cost: socialSharing });
-      if (search > 0) enabledCategories.push({ name: 'Site Search', cost: search });
-      if (uptime > 0) enabledCategories.push({ name: 'Uptime Monitoring', cost: uptime });
+      if (securityBackup > 0) enabledCategories.push({ name: 'Security & Backup', cost: securityBackup, totalCost: securityBackup * sites });
+      if (performance > 0) enabledCategories.push({ name: 'Performance & Optimization', cost: performance, totalCost: performance * sites });
+      if (videoHosting > 0) enabledCategories.push({ name: 'Video Hosting', cost: videoHosting, totalCost: videoHosting * sites });
+      if (formsCRM > 0) enabledCategories.push({ name: 'Forms & CRM', cost: formsCRM, totalCost: formsCRM * sites });
+      if (spamProtection > 0) enabledCategories.push({ name: 'Spam Protection', cost: spamProtection, totalCost: spamProtection * sites });
+      if (analytics > 0) enabledCategories.push({ name: 'Analytics & Stats', cost: analytics, totalCost: analytics * sites });
+      if (socialSharing > 0) enabledCategories.push({ name: 'Social Media & Sharing', cost: socialSharing, totalCost: socialSharing * sites });
+      if (search > 0) enabledCategories.push({ name: 'Site Search', cost: search, totalCost: search * sites });
+      if (uptime > 0) enabledCategories.push({ name: 'Uptime Monitoring', cost: uptime, totalCost: uptime * sites });
 
       const toolReplacements = totalToolSavings > 0 ? {
         totalSavings: totalToolSavings,
+        savingsPerSite: toolSavingsPerSite,
         categories: enabledCategories
       } : null;
 
@@ -1073,6 +1207,11 @@ const JETPACK_COMPLETE_VALUE = 899;
       const coSellingProjectValue = parseFloat(document.getElementById('coSellingProjectValue').value) || 10000;
       const coSellingYearly = coSellingProjects * coSellingProjectValue;
 
+      // Get revenue opportunity value
+      const additionalSitesPerYear = parseFloat(document.getElementById('additionalSitesPerYear').value) || 1;
+      const averageRevenuePerSite = parseFloat(document.getElementById('averageRevenuePerSite').value) || 10000;
+      const revenueOpportunityYearly = additionalSitesPerYear * averageRevenuePerSite;
+
       // Calculate partner tier benefits based on Pressable annual revenue
       const pressableYearlyRevenue = pressablePlan.priceMonthly * 12;
       const partnerTierData = calculatePartnerTier(pressableYearlyRevenue);
@@ -1082,6 +1221,7 @@ const JETPACK_COMPLETE_VALUE = 899;
 
       // Display results
       displayResults({
+        agencyName,
         competitorName,
         competitor: {
           sites,
@@ -1138,6 +1278,11 @@ const JETPACK_COMPLETE_VALUE = 899;
           valuePerProject: coSellingProjectValue,
           yearly: coSellingYearly
         },
+        revenueOpportunity: {
+          additionalSites: additionalSitesPerYear,
+          revenuePerSite: averageRevenuePerSite,
+          yearly: revenueOpportunityYearly
+        },
         partnerTier: partnerTierData,
         pressableWins
       });
@@ -1160,129 +1305,16 @@ const JETPACK_COMPLETE_VALUE = 899;
         ? `$${Math.abs(data.savings.perSite).toFixed(2)} cheaper per site`
         : `$${Math.abs(data.savings.perSite).toFixed(2)} more expensive per site`;
 
-      // Calculate total savings including tool replacements, dev time, co-selling, and partner tier lead value
+      // Calculate total savings including tool replacements, dev time, co-selling, revenue opportunity, and partner tier lead value
       const toolSavings = data.toolReplacements ? data.toolReplacements.totalSavings : 0;
       const devSavings = data.devTimeSavings ? data.devTimeSavings.yearly : 0;
       const coSellingValue = data.coSelling ? data.coSelling.yearly : 0;
+      const revenueOpportunityValue = data.revenueOpportunity ? data.revenueOpportunity.yearly : 0;
       const leadValue = data.partnerTier ? data.partnerTier.leadValue : 0;
-      const totalYearlySavings = data.savings.yearly + toolSavings + devSavings + coSellingValue + leadValue;
+      const totalYearlySavings = data.savings.yearly + toolSavings + devSavings + coSellingValue + revenueOpportunityValue + leadValue;
       const jetpackValuePerSite = data.toolReplacements ? JETPACK_COMPLETE_VALUE : 0;
 
       resultsDiv.innerHTML = `
-        ${data.toolReplacements ? `
-        <div class="accordion">
-          <div class="accordion-header" onclick="toggleAccordion(this)">
-            <span>Plugin/Tool Replacement Savings ($${data.toolReplacements.totalSavings.toLocaleString()}/year)</span>
-            <span class="accordion-icon">▼</span>
-          </div>
-          <div class="accordion-content">
-            <div class="accordion-inner">
-              <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 15px; border-radius: 6px; border: 2px solid var(--success-color);">
-                <h3 style="margin: 0 0 10px 0; color: var(--success-color); font-size: 16px;">Jetpack Complete Included Free</h3>
-                <p style="margin: 5px 0; font-size: 13px;">Every Pressable site comes with a free Jetpack Complete license — a $${jetpackValuePerSite.toLocaleString()}/year/site value ($${(jetpackValuePerSite * data.pressable.sites).toLocaleString()}/year for ${data.pressable.sites} sites).</p>
-
-                <div style="margin-top: 12px; padding: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 4px;">
-                  <p style="margin: 0 0 8px 0; font-size: 12px; font-weight: 600; color: var(--success-color);">What's Included:</p>
-                  <ul style="margin: 0; padding-left: 20px; font-size: 11px; color: #2e7d32;">
-                    <li>VaultPress Backup w/ 1TB storage</li>
-                    <li>Scan w/ WAF</li>
-                    <li>Akismet Anti-spam w/ 60k API calls/mo</li>
-                    <li>Stats w/ 100k views/mo (Commercial use)</li>
-                    <li>VideoPress w/ 1TB storage</li>
-                    <li>Boost w/ Auto CSS Generation</li>
-                    <li>Social Advanced w/ unlimited shares</li>
-                    <li>Site Search up to 100k records and 100k requests/mo</li>
-                    <li>CRM Entrepreneur</li>
-                    <li>All Jetpack features</li>
-                    <li>And more</li>
-                  </ul>
-                </div>
-
-                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(46, 125, 50, 0.3);">
-                  <p style="margin: 5px 0 8px 0; font-size: 12px; font-weight: 600; color: var(--success-color);">Replacing Your Current Costs:</p>
-                  <div style="font-size: 11px; color: #2e7d32;">
-                    ${data.toolReplacements.categories.map(cat => `
-                      <div style="margin: 3px 0; padding: 4px; background: rgba(255, 255, 255, 0.6); border-radius: 3px;">
-                        <strong>${cat.name}:</strong> $${cat.cost.toLocaleString()}/year
-                      </div>
-                    `).join('')}
-                  </div>
-                  <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: var(--success-color);">Total Plugin/Tool Savings: $${data.toolReplacements.totalSavings.toLocaleString()}/year</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        ` : ''}
-
-        ${data.devTimeSavings && data.devTimeSavings.yearly > 0 ? `
-        <div class="accordion">
-          <div class="accordion-header" onclick="toggleAccordion(this)">
-            <span>Developer Time Savings ($${data.devTimeSavings.yearly.toLocaleString()}/year)</span>
-            <span class="accordion-icon">▼</span>
-          </div>
-          <div class="accordion-content">
-            <div class="accordion-inner">
-              <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 15px; border-radius: 6px; border: 2px solid #1976d2;">
-                <h3 style="margin: 0 0 10px 0; color: #1976d2; font-size: 16px;">Developer Time Savings</h3>
-                <p style="margin: 5px 0; font-size: 13px;">With Pressable's managed hosting, reduce time spent on hosting-related issues</p>
-                <p style="margin: 5px 0; font-size: 13px;"><strong>Estimated Time Saved:</strong> ${data.devTimeSavings.hoursPerMonth} hour${data.devTimeSavings.hoursPerMonth !== 1 ? 's' : ''}/month (${(data.devTimeSavings.hoursPerMonth * 12).toFixed(1)} hours/year)</p>
-                <p style="margin: 5px 0; font-size: 13px;"><strong>Developer Rate:</strong> $${data.devTimeSavings.hourlyRate}/hour</p>
-                <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: #1976d2;">Time Savings Value: $${data.devTimeSavings.yearly.toLocaleString()}/year</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        ` : ''}
-
-        ${data.partnerTier && data.partnerTier.tier !== 'none' && data.partnerTier.tier !== 'emerging' ? `
-        <div class="accordion">
-          <div class="accordion-header" onclick="toggleAccordion(this)">
-            <span>Lead Flow (From $${data.partnerTier.leadValue.toLocaleString()}/year)</span>
-            <span class="accordion-icon">▼</span>
-          </div>
-          <div class="accordion-content">
-            <div class="accordion-inner">
-              <div style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); padding: 15px; border-radius: 6px; border: 2px solid #9c27b0;">
-                <h3 style="margin: 0 0 10px 0; color: #9c27b0; font-size: 16px;">Receive Warm Leads & Close More Ideal Clients</h3>
-                <p style="margin: 5px 0; font-size: 13px;">Pressable hosting qualifies you for <strong>${data.partnerTier.tierName}</strong> status ($${data.partnerTier.iar.toLocaleString()} annual IAR)</p>
-                <p style="margin: 8px 0; font-size: 12px; color: #555; font-style: italic;">${data.partnerTier.description}</p>
-                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(156, 39, 176, 0.3);">
-                  <p style="margin: 5px 0; font-size: 12px; font-weight: 600; color: #7b1fa2;">What You Get:</p>
-                  <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px; color: #555;">
-                    ${data.partnerTier.tier === 'pro' ? `
-                      <li>Warm, pre-qualified project inquiries delivered to your inbox</li>
-                      <li>Exclusive listings across WordPress.com, WooCommerce, Jetpack & Pressable directories</li>
-                      <li>Built-in credibility from Automattic association (powers 40% of the web)</li>
-                      <li>Priority support, co-marketing opportunities & dedicated partner manager</li>
-                      <li>Advisory board invitation to influence product roadmap</li>
-                    ` : `
-                      <li>Organic visibility in high-traffic Automattic directories</li>
-                      <li>Built-in credibility from Automattic association</li>
-                      <li>Early access to new features & product roadmap input</li>
-                      <li>Training, resources & networking opportunities</li>
-                    `}
-                  </ul>
-                  ${data.partnerTier.leadValue > 0 ? `
-                    <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: #9c27b0;">
-                      Turn visibility into revenue: ${data.partnerTier.totalLeads} qualified lead${data.partnerTier.totalLeads !== 1 ? 's' : ''}/year
-                      ${data.partnerTier.tier === 'pro' ? ` (${data.partnerTier.agencyLeads} organic + ${data.partnerTier.proLeads} referral)` : ''}
-                    </p>
-                    <p style="margin: 5px 0 0 0; font-size: 12px; color: #7b1fa2;">
-                      Estimated annual value: $${data.partnerTier.leadValue.toLocaleString()}
-                    </p>
-                  ` : ''}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        ` : data.partnerTier && data.partnerTier.tier === 'emerging' ? `
-        <div style="background: #f3e5f5; padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #ce93d8;">
-          <p style="margin: 0; font-size: 12px; color: #7b1fa2;"><strong>Partner Program:</strong> Account Activated - Access to partner dashboard and foundational benefits</p>
-        </div>
-        ` : ''}
-
         <div class="accordion">
           <div class="accordion-header" onclick="toggleAccordion(this)">
             <span>Hosting Comparison</span>
@@ -1473,9 +1505,144 @@ const JETPACK_COMPLETE_VALUE = 899;
           </div>
         </div>
 
+        ${data.toolReplacements ? `
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Plugin/Tool Replacement Savings ($${data.toolReplacements.totalSavings.toLocaleString()}/year)</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 15px; border-radius: 6px; border: 2px solid var(--success-color);">
+                <h3 style="margin: 0 0 10px 0; color: var(--success-color); font-size: 16px;">Jetpack Complete Included Free</h3>
+                <p style="margin: 5px 0; font-size: 13px;">Every Pressable site comes with a free Jetpack Complete license — a $${jetpackValuePerSite.toLocaleString()}/year/site value ($${(jetpackValuePerSite * data.pressable.sites).toLocaleString()}/year for ${data.pressable.sites} sites).</p>
+
+                <div style="margin-top: 12px; padding: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 4px;">
+                  <p style="margin: 0 0 8px 0; font-size: 12px; font-weight: 600; color: var(--success-color);">What's Included:</p>
+                  <ul style="margin: 0; padding-left: 20px; font-size: 11px; color: #2e7d32;">
+                    <li>VaultPress Backup w/ 1TB storage</li>
+                    <li>Scan w/ WAF</li>
+                    <li>Akismet Anti-spam w/ 60k API calls/mo</li>
+                    <li>Stats w/ 100k views/mo (Commercial use)</li>
+                    <li>VideoPress w/ 1TB storage</li>
+                    <li>Boost w/ Auto CSS Generation</li>
+                    <li>Social Advanced w/ unlimited shares</li>
+                    <li>Site Search up to 100k records and 100k requests/mo</li>
+                    <li>CRM Entrepreneur</li>
+                    <li>All Jetpack features</li>
+                    <li>And more</li>
+                  </ul>
+                </div>
+
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(46, 125, 50, 0.3);">
+                  <p style="margin: 5px 0 8px 0; font-size: 12px; font-weight: 600; color: var(--success-color);">Replacing Your Current Costs:</p>
+                  <div style="font-size: 11px; color: #2e7d32;">
+                    ${data.toolReplacements.categories.map(cat => `
+                      <div style="margin: 3px 0; padding: 4px; background: rgba(255, 255, 255, 0.6); border-radius: 3px;">
+                        <strong>${cat.name}:</strong> $${cat.cost.toLocaleString()}/site/year × ${data.competitor.sites} sites = <strong>$${cat.totalCost.toLocaleString()}/year</strong>
+                      </div>
+                    `).join('')}
+                  </div>
+                  <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: var(--success-color);">Total Plugin/Tool Savings: $${data.toolReplacements.totalSavings.toLocaleString()}/year</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        ` : ''}
+
+        ${data.devTimeSavings && data.devTimeSavings.yearly > 0 ? `
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Developer Time Savings ($${data.devTimeSavings.yearly.toLocaleString()}/year)</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 15px; border-radius: 6px; border: 2px solid #1976d2;">
+                <h3 style="margin: 0 0 10px 0; color: #1976d2; font-size: 16px;">Developer Time Savings</h3>
+                <p style="margin: 5px 0; font-size: 13px;">With Pressable's managed hosting, reduce time spent on hosting-related issues</p>
+                <p style="margin: 5px 0; font-size: 13px;"><strong>Estimated Time Saved:</strong> ${data.devTimeSavings.hoursPerMonth} hour${data.devTimeSavings.hoursPerMonth !== 1 ? 's' : ''}/month (${(data.devTimeSavings.hoursPerMonth * 12).toFixed(1)} hours/year)</p>
+                <p style="margin: 5px 0; font-size: 13px;"><strong>Developer Rate:</strong> $${data.devTimeSavings.hourlyRate}/hour</p>
+                <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: #1976d2;">Time Savings Value: $${data.devTimeSavings.yearly.toLocaleString()}/year</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        ` : ''}
+
+        ${data.revenueOpportunity && data.revenueOpportunity.yearly > 0 ? `
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Time Reinvestment ($${data.revenueOpportunity.yearly.toLocaleString()}/year)</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <div style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); padding: 15px; border-radius: 6px; border: 2px solid #9c27b0;">
+                <h3 style="margin: 0 0 10px 0; color: #9c27b0; font-size: 16px;">Grow Your Business with Time Savings</h3>
+                <p style="margin: 5px 0; font-size: 13px;">Reinvest the time you save into winning and managing more sites</p>
+                <p style="margin: 5px 0; font-size: 13px;"><strong>Additional Sites/Year:</strong> ${data.revenueOpportunity.additionalSites}</p>
+                <p style="margin: 5px 0; font-size: 13px;"><strong>Average Revenue/Site:</strong> $${data.revenueOpportunity.revenuePerSite.toLocaleString()}/year</p>
+                <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: #9c27b0;">Additional Revenue Opportunity: $${data.revenueOpportunity.yearly.toLocaleString()}/year</p>
+                <p style="margin: 8px 0 0 0; font-size: 12px; color: #7b1fa2; font-style: italic;">Time saved from Pressable's managed hosting enables business growth</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        ` : ''}
+
+        ${data.partnerTier && data.partnerTier.tier !== 'none' && data.partnerTier.tier !== 'emerging' ? `
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Lead Flow (From $${data.partnerTier.leadValue.toLocaleString()}/year)</span>
+            <span class="accordion-icon">▼</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <div style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); padding: 15px; border-radius: 6px; border: 2px solid #9c27b0;">
+                <h3 style="margin: 0 0 10px 0; color: #9c27b0; font-size: 16px;">Receive Warm Leads & Close More Ideal Clients</h3>
+                <p style="margin: 5px 0; font-size: 13px;">Pressable hosting qualifies you for <strong>${data.partnerTier.tierName}</strong> status ($${data.partnerTier.iar.toLocaleString()} annual IAR)</p>
+                <p style="margin: 8px 0; font-size: 12px; color: #555; font-style: italic;">${data.partnerTier.description}</p>
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(156, 39, 176, 0.3);">
+                  <p style="margin: 5px 0; font-size: 12px; font-weight: 600; color: #7b1fa2;">What You Get:</p>
+                  <ul style="margin: 5px 0; padding-left: 20px; font-size: 12px; color: #555;">
+                    ${data.partnerTier.tier === 'pro' ? `
+                      <li>Warm, pre-qualified project inquiries delivered to your inbox</li>
+                      <li>Exclusive listings across WordPress.com, WooCommerce, Jetpack & Pressable directories</li>
+                      <li>Built-in credibility from Automattic association (powers 40% of the web)</li>
+                      <li>Priority support, co-marketing opportunities & dedicated partner manager</li>
+                      <li>Advisory board invitation to influence product roadmap</li>
+                    ` : `
+                      <li>Organic visibility in high-traffic Automattic directories</li>
+                      <li>Built-in credibility from Automattic association</li>
+                      <li>Early access to new features & product roadmap input</li>
+                      <li>Training, resources & networking opportunities</li>
+                    `}
+                  </ul>
+                  ${data.partnerTier.leadValue > 0 ? `
+                    <p style="margin: 10px 0 0 0; font-size: 13px; font-weight: 600; color: #9c27b0;">
+                      Turn visibility into revenue: ${data.partnerTier.totalLeads} qualified lead${data.partnerTier.totalLeads !== 1 ? 's' : ''}/year
+                      ${data.partnerTier.tier === 'pro' ? ` (${data.partnerTier.agencyLeads} organic + ${data.partnerTier.proLeads} referral)` : ''}
+                    </p>
+                    <p style="margin: 5px 0 0 0; font-size: 12px; color: #7b1fa2;">
+                      Estimated annual value: $${data.partnerTier.leadValue.toLocaleString()}
+                    </p>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        ` : data.partnerTier && data.partnerTier.tier === 'emerging' ? `
+        <div style="background: #f3e5f5; padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #ce93d8;">
+          <p style="margin: 0; font-size: 12px; color: #7b1fa2;"><strong>Partner Program:</strong> Account Activated - Access to partner dashboard and foundational benefits</p>
+        </div>
+        ` : ''}
+
         ${data.pressableWins ? `
           <div class="savings">
-            <h3>Total Financial Impact</h3>
+            <h3>Total Financial Impact${data.agencyName ? ` - ${data.agencyName}` : ''}</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px;">
               <div style="background: white; padding: 12px; border-radius: 4px;">
                 <h4 style="margin: 0 0 8px 0; color: var(--success-color); font-size: 14px;">Cost Savings</h4>
@@ -1484,22 +1651,30 @@ const JETPACK_COMPLETE_VALUE = 899;
                 ${data.devTimeSavings && data.devTimeSavings.yearly > 0 ? `<p style="margin: 5px 0;"><strong>Developer Time Recovered:</strong> <span class="savings-amount">$${data.devTimeSavings.yearly.toLocaleString()}/year</span></p>` : ''}
                 <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Subtotal Savings: <span class="savings-amount">$${(data.savings.yearly + toolSavings + devSavings).toLocaleString()}/year</span></p>
               </div>
-              ${(data.partnerTier && data.partnerTier.leadValue > 0) || (data.coSelling && data.coSelling.yearly > 0) ? `
+              ${(data.partnerTier && data.partnerTier.leadValue > 0) || (data.coSelling && data.coSelling.yearly > 0) || (data.revenueOpportunity && data.revenueOpportunity.yearly > 0) ? `
               <div style="background: white; padding: 12px; border-radius: 4px;">
                 <h4 style="margin: 0 0 8px 0; color: #9c27b0; font-size: 14px;">Revenue Opportunities</h4>
-                ${data.partnerTier && data.partnerTier.leadValue > 0 ? `
-                <p style="margin: 5px 0;"><strong>Partner Program Leads:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.partnerTier.leadValue.toLocaleString()}/year</span></p>
-                <p style="margin: 5px 0; font-size: 12px; color: #666;">Based on ${data.partnerTier.totalLeads} qualified lead${data.partnerTier.totalLeads !== 1 ? 's' : ''} from ${data.partnerTier.tierName} directory listings</p>
+                ${data.revenueOpportunity && data.revenueOpportunity.yearly > 0 ? `
+                <p style="margin: 5px 0;"><strong>Team Reinvestment Revenue:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.revenueOpportunity.yearly.toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.revenueOpportunity.additionalSites} additional site${data.revenueOpportunity.additionalSites !== 1 ? 's' : ''} from reinvested time into business growth</p>
+                ` : ''}
+                ${data.partnerTier && data.partnerTier.agencyLeads > 0 ? `
+                <p style="margin: 5px 0;"><strong>Directory Listing Leads:</strong> <span class="savings-amount" style="color: #9c27b0;">$${(data.partnerTier.agencyLeads * data.partnerTier.agencyValuePerLead).toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.partnerTier.agencyLeads} organic lead${data.partnerTier.agencyLeads !== 1 ? 's' : ''} from ${data.partnerTier.tierName} directory visibility</p>
+                ` : ''}
+                ${data.partnerTier && data.partnerTier.tier === 'pro' && data.partnerTier.proLeads > 0 ? `
+                <p style="margin: 5px 0;"><strong>Referral Leads (Sent to You):</strong> <span class="savings-amount" style="color: #9c27b0;">$${(data.partnerTier.proLeads * data.partnerTier.proValuePerLead).toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.partnerTier.proLeads} pre-qualified referral${data.partnerTier.proLeads !== 1 ? 's' : ''} delivered to your inbox</p>
                 ` : ''}
                 ${data.coSelling && data.coSelling.yearly > 0 ? `
                 <p style="margin: 5px 0;"><strong>Co-Selling Projects:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.coSelling.yearly.toLocaleString()}/year</span></p>
                 <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.coSelling.projects} project${data.coSelling.projects !== 1 ? 's' : ''} won with Automattic's sales support</p>
                 ` : ''}
-                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Total Revenue: <span class="savings-amount" style="color: #9c27b0;">$${(leadValue + coSellingValue).toLocaleString()}/year</span></p>
+                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Total Revenue Estimate: <span class="savings-amount" style="color: #9c27b0;">$${(revenueOpportunityValue + leadValue + coSellingValue).toLocaleString()}/year</span></p>
               </div>
               ` : '<div></div>'}
               <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 15px; border-radius: 4px; border: 2px solid var(--success-color); display: flex; flex-direction: column; justify-content: center;">
-                <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--success-color);">Additional Cash Flow</p>
+                <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--success-color);">Estimated Additional Cash Flow</p>
                 <p style="margin: 5px 0 0 0; font-size: 24px; font-weight: 700; color: var(--success-color);">~$${(Math.round(totalYearlySavings / 100) * 100).toLocaleString()}/year</p>
                 <p style="margin: 5px 0 0 0; font-size: 12px; color: #2e7d32;">~$${(Math.round((totalYearlySavings / 12) / 100) * 100).toLocaleString()} more per month</p>
               </div>
@@ -1507,7 +1682,7 @@ const JETPACK_COMPLETE_VALUE = 899;
           </div>
         ` : `
           <div class="savings" style="border-left-color: #ff9800; background: #fff3e0;">
-            <h3>Total Financial Impact</h3>
+            <h3>Total Financial Impact${data.agencyName ? ` - ${data.agencyName}` : ''}</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px;">
               <div style="background: white; padding: 12px; border-radius: 4px;">
                 <h4 style="margin: 0 0 8px 0; color: ${(toolSavings + devSavings) > Math.abs(data.savings.yearly) ? 'var(--success-color)' : '#e65100'}; font-size: 14px;">${(toolSavings + devSavings) > Math.abs(data.savings.yearly) ? 'Net Cost Savings' : 'Hosting Cost Difference'}</h4>
@@ -1519,18 +1694,26 @@ const JETPACK_COMPLETE_VALUE = 899;
                 <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Net Savings: <span class="savings-amount">${(toolSavings + devSavings) > Math.abs(data.savings.yearly) ? '+' : ''}$${((toolSavings + devSavings) - Math.abs(data.savings.yearly)).toLocaleString()}/year</span></p>
                 ` : ''}
               </div>
-              ${(data.partnerTier && data.partnerTier.leadValue > 0) || (data.coSelling && data.coSelling.yearly > 0) ? `
+              ${(data.partnerTier && data.partnerTier.leadValue > 0) || (data.coSelling && data.coSelling.yearly > 0) || (data.revenueOpportunity && data.revenueOpportunity.yearly > 0) ? `
               <div style="background: white; padding: 12px; border-radius: 4px;">
                 <h4 style="margin: 0 0 8px 0; color: #9c27b0; font-size: 14px;">Revenue Opportunities</h4>
-                ${data.partnerTier && data.partnerTier.leadValue > 0 ? `
-                <p style="margin: 5px 0;"><strong>Partner Program Leads:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.partnerTier.leadValue.toLocaleString()}/year</span></p>
-                <p style="margin: 5px 0; font-size: 12px; color: #666;">Based on ${data.partnerTier.totalLeads} qualified lead${data.partnerTier.totalLeads !== 1 ? 's' : ''} from ${data.partnerTier.tierName} directory listings</p>
+                ${data.revenueOpportunity && data.revenueOpportunity.yearly > 0 ? `
+                <p style="margin: 5px 0;"><strong>Team Reinvestment Revenue:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.revenueOpportunity.yearly.toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.revenueOpportunity.additionalSites} additional site${data.revenueOpportunity.additionalSites !== 1 ? 's' : ''} from reinvested time into business growth</p>
+                ` : ''}
+                ${data.partnerTier && data.partnerTier.agencyLeads > 0 ? `
+                <p style="margin: 5px 0;"><strong>Directory Listing Leads:</strong> <span class="savings-amount" style="color: #9c27b0;">$${(data.partnerTier.agencyLeads * data.partnerTier.agencyValuePerLead).toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.partnerTier.agencyLeads} organic lead${data.partnerTier.agencyLeads !== 1 ? 's' : ''} from ${data.partnerTier.tierName} directory visibility</p>
+                ` : ''}
+                ${data.partnerTier && data.partnerTier.tier === 'pro' && data.partnerTier.proLeads > 0 ? `
+                <p style="margin: 5px 0;"><strong>Referral Leads (Sent to You):</strong> <span class="savings-amount" style="color: #9c27b0;">$${(data.partnerTier.proLeads * data.partnerTier.proValuePerLead).toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.partnerTier.proLeads} pre-qualified referral${data.partnerTier.proLeads !== 1 ? 's' : ''} delivered to your inbox</p>
                 ` : ''}
                 ${data.coSelling && data.coSelling.yearly > 0 ? `
                 <p style="margin: 5px 0;"><strong>Co-Selling Projects:</strong> <span class="savings-amount" style="color: #9c27b0;">$${data.coSelling.yearly.toLocaleString()}/year</span></p>
                 <p style="margin: 5px 0; font-size: 12px; color: #666;">${data.coSelling.projects} project${data.coSelling.projects !== 1 ? 's' : ''} won with Automattic's sales support</p>
                 ` : ''}
-                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Total Revenue: <span class="savings-amount" style="color: #9c27b0;">$${(leadValue + coSellingValue).toLocaleString()}/year</span></p>
+                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Total Revenue Estimate: <span class="savings-amount" style="color: #9c27b0;">$${(revenueOpportunityValue + leadValue + coSellingValue).toLocaleString()}/year</span></p>
               </div>
               ` : '<div></div>'}
               <div style="background: linear-gradient(135deg, ${totalYearlySavings > 0 ? '#e8f5e9 0%, #c8e6c9 100%' : '#fff3e0 0%, #ffe0b2 100%'}); padding: 15px; border-radius: 4px; border: 2px solid ${totalYearlySavings > 0 ? 'var(--success-color)' : '#ff9800'}; display: flex; flex-direction: column; justify-content: center;">
@@ -1580,35 +1763,67 @@ const JETPACK_COMPLETE_VALUE = 899;
       const checkbox = document.getElementById(categoryName + 'Enabled');
       const wrapper = document.getElementById(categoryName + 'Wrapper');
       const input = document.getElementById(categoryName + 'Cost');
+      const periodSelect = document.getElementById(categoryName + 'Period');
+      const typeSelect = document.getElementById(categoryName + 'Type');
 
       if (checkbox.checked) {
-        // Enable: full opacity, enable input
+        // Enable: full opacity, enable input and dropdowns
         wrapper.style.opacity = '1';
         input.disabled = false;
+        if (periodSelect) periodSelect.disabled = false;
+        if (typeSelect) typeSelect.disabled = false;
       } else {
-        // Disable: reduced opacity, disable input
+        // Disable: reduced opacity, disable input and dropdowns
         wrapper.style.opacity = '0.4';
         input.disabled = true;
+        if (periodSelect) periodSelect.disabled = true;
+        if (typeSelect) typeSelect.disabled = true;
       }
 
       // Update the total savings
       updateToolSavings();
     }
 
+    // Helper function to calculate normalized annual per-site cost for a tool category
+    function calculateNormalizedToolCost(categoryName) {
+      const enabled = document.getElementById(categoryName + 'Enabled').checked;
+      if (!enabled) return 0;
+
+      const cost = parseFloat(document.getElementById(categoryName + 'Cost').value) || 0;
+      const period = document.getElementById(categoryName + 'Period').value; // 'yearly' or 'monthly'
+      const type = document.getElementById(categoryName + 'Type').value; // 'per-site' or 'bulk'
+      const numSites = parseInt(document.getElementById('competitorSites').value) || 1;
+
+      // Convert to annual cost
+      let annualCost = period === 'monthly' ? cost * 12 : cost;
+
+      // Convert to per-site cost
+      let perSiteCost = type === 'bulk' ? annualCost / numSites : annualCost;
+
+      return perSiteCost;
+    }
+
     // Update tool savings calculation
     function updateToolSavings() {
-      const securityBackup = document.getElementById('securityBackupEnabled').checked ? (parseFloat(document.getElementById('securityBackupCost').value) || 0) : 0;
-      const performance = document.getElementById('performanceEnabled').checked ? (parseFloat(document.getElementById('performanceCost').value) || 0) : 0;
-      const videoHosting = document.getElementById('videoHostingEnabled').checked ? (parseFloat(document.getElementById('videoHostingCost').value) || 0) : 0;
-      const formsCRM = document.getElementById('formsCRMEnabled').checked ? (parseFloat(document.getElementById('formsCRMCost').value) || 0) : 0;
-      const spamProtection = document.getElementById('spamProtectionEnabled').checked ? (parseFloat(document.getElementById('spamProtectionCost').value) || 0) : 0;
-      const analytics = document.getElementById('analyticsEnabled').checked ? (parseFloat(document.getElementById('analyticsCost').value) || 0) : 0;
-      const socialSharing = document.getElementById('socialSharingEnabled').checked ? (parseFloat(document.getElementById('socialSharingCost').value) || 0) : 0;
-      const search = document.getElementById('searchEnabled').checked ? (parseFloat(document.getElementById('searchCost').value) || 0) : 0;
-      const uptime = document.getElementById('uptimeEnabled').checked ? (parseFloat(document.getElementById('uptimeCost').value) || 0) : 0;
+      // Calculate normalized annual per-site costs for each category
+      const securityBackup = calculateNormalizedToolCost('securityBackup');
+      const performance = calculateNormalizedToolCost('performance');
+      const videoHosting = calculateNormalizedToolCost('videoHosting');
+      const formsCRM = calculateNormalizedToolCost('formsCRM');
+      const spamProtection = calculateNormalizedToolCost('spamProtection');
+      const analytics = calculateNormalizedToolCost('analytics');
+      const socialSharing = calculateNormalizedToolCost('socialSharing');
+      const search = calculateNormalizedToolCost('search');
+      const uptime = calculateNormalizedToolCost('uptime');
 
-      const totalSavings = securityBackup + performance + videoHosting +
+      const savingsPerSite = securityBackup + performance + videoHosting +
                           formsCRM + spamProtection + analytics + socialSharing + search + uptime;
+
+      // Get number of sites from the competitor sites input
+      const numSites = parseInt(document.getElementById('competitorSites').value) || 1;
+
+      // Calculate total savings (per-site savings × number of sites)
+      const totalSavings = savingsPerSite * numSites;
 
       document.getElementById('tool-savings-amount').textContent = `$${totalSavings.toLocaleString()}/year`;
 
@@ -1643,7 +1858,37 @@ const JETPACK_COMPLETE_VALUE = 899;
       autoCompare();
     }
 
+    // Update revenue opportunity calculation
+    function updateRevenueOpportunity() {
+      const additionalSites = parseFloat(document.getElementById('additionalSitesPerYear').value) || 1;
+      const revenuePerSite = parseFloat(document.getElementById('averageRevenuePerSite').value) || 10000;
+
+      const annualRevenue = additionalSites * revenuePerSite;
+
+      document.getElementById('revenue-opportunity-amount').textContent = `$${annualRevenue.toLocaleString()}/year`;
+
+      // Trigger auto-compare to update results
+      autoCompare();
+    }
+
     // Calculate partner tier based on Pressable plan IAR
+    // Toggle Pro Partner estimate visibility
+    function toggleProPartnerEstimate() {
+      const proSection = document.getElementById('pro-partner-section');
+      const toggleBtn = document.getElementById('pro-partner-toggle-btn');
+
+      if (proSection.style.display === 'none') {
+        proSection.style.display = 'block';
+        toggleBtn.querySelector('button').textContent = 'Hide Pro Partner Estimate';
+      } else {
+        proSection.style.display = 'none';
+        toggleBtn.querySelector('button').textContent = 'Estimate Pro Partner Status ($5,000+ IAR)';
+      }
+
+      // Recalculate after toggling
+      autoCompare();
+    }
+
     function calculatePartnerTier(pressableYearlyRevenue) {
       // Get number of leads and value per lead
       const agencyLeads = parseFloat(document.getElementById('agencyPartnerLeads').value) || 1;
@@ -1658,6 +1903,25 @@ const JETPACK_COMPLETE_VALUE = 899;
       // Update the total value displays
       document.getElementById('agencyTotalValue').textContent = `$${agencyTotalValue.toLocaleString()}`;
       document.getElementById('proTotalValue').textContent = `$${proTotalValue.toLocaleString()}`;
+
+      // Check if Pro Partner section is visible (either by IAR or manual toggle)
+      const proSection = document.getElementById('pro-partner-section');
+      const toggleBtn = document.getElementById('pro-partner-toggle-btn');
+      const isProVisible = proSection.style.display !== 'none';
+
+      // Update visibility based on IAR
+      if (pressableYearlyRevenue >= 5000) {
+        // Always show Pro section and hide toggle button when qualified
+        proSection.style.display = 'block';
+        toggleBtn.style.display = 'none';
+      } else if (pressableYearlyRevenue >= 1200) {
+        // Show toggle button, keep current state of Pro section
+        toggleBtn.style.display = 'block';
+      } else {
+        // Below Agency tier - hide both
+        proSection.style.display = 'none';
+        toggleBtn.style.display = 'none';
+      }
 
       let tier = 'none';
       let tierName = 'No Tier';
@@ -1674,8 +1938,9 @@ const JETPACK_COMPLETE_VALUE = 899;
       } else if (pressableYearlyRevenue >= 1200) {
         tier = 'agency';
         tierName = 'Agency Partner';
-        leadValue = agencyTotalValue;
-        totalLeads = agencyLeads;
+        // Only include pro leads if the section is visible
+        leadValue = isProVisible ? agencyTotalValue + proTotalValue : agencyTotalValue;
+        totalLeads = isProVisible ? agencyLeads + proLeads : agencyLeads;
         description = `Organic lead flow from exclusive directory listings across WordPress.com, WooCommerce, Jetpack & Pressable`;
       } else if (pressableYearlyRevenue > 0) {
         tier = 'emerging';
@@ -1771,6 +2036,7 @@ const JETPACK_COMPLETE_VALUE = 899;
       });
 
       const inputs = [
+        'agencyName',
         'competitorNameSelect',
         'competitorName',
         'competitorSites',
@@ -1791,6 +2057,13 @@ const JETPACK_COMPLETE_VALUE = 899;
           element.addEventListener('change', autoCompare);
         }
       });
+
+      // Add event listener to competitorSites to update tool savings when sites change
+      const competitorSitesInput = document.getElementById('competitorSites');
+      if (competitorSitesInput) {
+        competitorSitesInput.addEventListener('input', updateToolSavings);
+        competitorSitesInput.addEventListener('change', updateToolSavings);
+      }
 
       // Add event listeners for dev time fields
       const devHourlyRate = document.getElementById('devHourlyRate');
@@ -1836,8 +2109,28 @@ const JETPACK_COMPLETE_VALUE = 899;
         }
       });
 
+      // Add event listeners for revenue opportunity fields
+      const revenueOpportunityInputs = [
+        'additionalSitesPerYear',
+        'averageRevenuePerSite'
+      ];
+
+      revenueOpportunityInputs.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener('input', updateRevenueOpportunity);
+          element.addEventListener('change', updateRevenueOpportunity);
+        }
+      });
+
       // Initialize dev time savings display
       updateDevTimeSavings();
+
+      // Initialize revenue opportunity display
+      updateRevenueOpportunity();
+
+      // Load values from URL parameters if present
+      loadFromURLParams();
 
       // Trigger initial calculation if we have default values
       // This will show comparison immediately on page load
@@ -1849,6 +2142,300 @@ const JETPACK_COMPLETE_VALUE = 899;
         }, 100);
       }
     });
+
+    // Parse URL parameters and populate form fields
+    function loadFromURLParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+
+      // Map of URL parameter names to element IDs
+      const fieldMap = {
+        // Personalization
+        'agencyName': 'agencyName',
+
+        // Competitor details
+        'competitorName': 'competitorName',
+        'competitorNameSelect': 'competitorNameSelect',
+        'competitorSites': 'competitorSites',
+        'competitorPrice': 'competitorPrice',
+        'competitorVisits': 'competitorVisits',
+        'competitorStorage': 'competitorStorage',
+        'pricingPeriod': 'pricingPeriod',
+        'resourceType': 'resourceType',
+        'competitorCPU': 'competitorCPU',
+        'competitorPHPWorkers': 'competitorPHPWorkers',
+        'competitorRAM': 'competitorRAM',
+
+        // Tool categories (checkboxes, costs, periods, and types)
+        'securityBackupEnabled': 'securityBackupEnabled',
+        'securityBackupCost': 'securityBackupCost',
+        'securityBackupPeriod': 'securityBackupPeriod',
+        'securityBackupType': 'securityBackupType',
+        'performanceEnabled': 'performanceEnabled',
+        'performanceCost': 'performanceCost',
+        'performancePeriod': 'performancePeriod',
+        'performanceType': 'performanceType',
+        'videoHostingEnabled': 'videoHostingEnabled',
+        'videoHostingCost': 'videoHostingCost',
+        'videoHostingPeriod': 'videoHostingPeriod',
+        'videoHostingType': 'videoHostingType',
+        'formsCRMEnabled': 'formsCRMEnabled',
+        'formsCRMCost': 'formsCRMCost',
+        'formsCRMPeriod': 'formsCRMPeriod',
+        'formsCRMType': 'formsCRMType',
+        'spamProtectionEnabled': 'spamProtectionEnabled',
+        'spamProtectionCost': 'spamProtectionCost',
+        'spamProtectionPeriod': 'spamProtectionPeriod',
+        'spamProtectionType': 'spamProtectionType',
+        'analyticsEnabled': 'analyticsEnabled',
+        'analyticsCost': 'analyticsCost',
+        'analyticsPeriod': 'analyticsPeriod',
+        'analyticsType': 'analyticsType',
+        'socialSharingEnabled': 'socialSharingEnabled',
+        'socialSharingCost': 'socialSharingCost',
+        'socialSharingPeriod': 'socialSharingPeriod',
+        'socialSharingType': 'socialSharingType',
+        'searchEnabled': 'searchEnabled',
+        'searchCost': 'searchCost',
+        'searchPeriod': 'searchPeriod',
+        'searchType': 'searchType',
+        'uptimeEnabled': 'uptimeEnabled',
+        'uptimeCost': 'uptimeCost',
+        'uptimePeriod': 'uptimePeriod',
+        'uptimeType': 'uptimeType',
+
+        // Dev time savings
+        'devHourlyRate': 'devHourlyRate',
+        'devHoursPerMonth': 'devHoursPerMonth',
+
+        // Partner tier values
+        'agencyPartnerLeads': 'agencyPartnerLeads',
+        'agencyPartnerLeadValue': 'agencyPartnerLeadValue',
+        'proPartnerLeads': 'proPartnerLeads',
+        'proPartnerLeadValue': 'proPartnerLeadValue',
+
+        // Co-selling
+        'coSellingProjects': 'coSellingProjects',
+        'coSellingProjectValue': 'coSellingProjectValue',
+
+        // Revenue opportunity
+        'additionalSitesPerYear': 'additionalSitesPerYear',
+        'averageRevenuePerSite': 'averageRevenuePerSite'
+      };
+
+      // Iterate through URL parameters and set form values
+      for (const [paramName, elementId] of Object.entries(fieldMap)) {
+        if (urlParams.has(paramName)) {
+          const element = document.getElementById(elementId);
+          if (element) {
+            const value = urlParams.get(paramName);
+
+            // Handle checkboxes
+            if (element.type === 'checkbox') {
+              element.checked = value === 'true' || value === '1';
+
+              // Trigger the toggle function for tool categories
+              const categoryName = paramName.replace('Enabled', '');
+              if (typeof toggleToolCategory === 'function') {
+                toggleToolCategory(categoryName);
+              }
+            }
+            // Handle select elements and text/number inputs
+            else {
+              element.value = value;
+            }
+          }
+        }
+      }
+
+      // Special handling for competitorNameSelect
+      if (urlParams.has('competitorNameSelect')) {
+        const select = document.getElementById('competitorNameSelect');
+        const customInput = document.getElementById('competitorName');
+        const selectedValue = urlParams.get('competitorNameSelect');
+
+        if (select) {
+          select.value = selectedValue;
+
+          // Show custom input if 'custom' is selected
+          if (selectedValue === 'custom' && urlParams.has('competitorName')) {
+            customInput.style.display = 'block';
+            customInput.value = urlParams.get('competitorName');
+          } else if (selectedValue !== 'custom') {
+            customInput.style.display = 'none';
+            customInput.value = selectedValue;
+          }
+        }
+      }
+
+      // Trigger updates for any modified fields
+      if (urlParams.size > 0) {
+        updateToolSavings();
+        updateDevTimeSavings();
+        updateTierDisplay();
+        updateCoSelling();
+        updateRevenueOpportunity();
+      }
+    }
+
+    // Generate shareable URL with current form values
+    function generateShareableURL() {
+      const params = new URLSearchParams();
+
+      // Personalization
+      const agencyName = document.getElementById('agencyName').value;
+      if (agencyName) params.set('agencyName', agencyName);
+
+      // Competitor details
+      const competitorNameSelect = document.getElementById('competitorNameSelect').value;
+      params.set('competitorNameSelect', competitorNameSelect);
+
+      if (competitorNameSelect === 'custom') {
+        const customName = document.getElementById('competitorName').value;
+        if (customName) params.set('competitorName', customName);
+      }
+
+      const competitorSites = document.getElementById('competitorSites').value;
+      if (competitorSites) params.set('competitorSites', competitorSites);
+
+      const competitorPrice = document.getElementById('competitorPrice').value;
+      if (competitorPrice) params.set('competitorPrice', competitorPrice);
+
+      const competitorVisits = document.getElementById('competitorVisits').value;
+      if (competitorVisits) params.set('competitorVisits', competitorVisits);
+
+      const competitorStorage = document.getElementById('competitorStorage').value;
+      if (competitorStorage) params.set('competitorStorage', competitorStorage);
+
+      const pricingPeriod = document.getElementById('pricingPeriod').value;
+      if (pricingPeriod) params.set('pricingPeriod', pricingPeriod);
+
+      const resourceType = document.getElementById('resourceType').value;
+      if (resourceType) params.set('resourceType', resourceType);
+
+      const competitorCPU = document.getElementById('competitorCPU').value;
+      if (competitorCPU) params.set('competitorCPU', competitorCPU);
+
+      const competitorPHPWorkers = document.getElementById('competitorPHPWorkers').value;
+      if (competitorPHPWorkers) params.set('competitorPHPWorkers', competitorPHPWorkers);
+
+      const competitorRAM = document.getElementById('competitorRAM').value;
+      if (competitorRAM) params.set('competitorRAM', competitorRAM);
+
+      // Tool categories
+      const categories = ['securityBackup', 'performance', 'videoHosting', 'formsCRM', 'spamProtection', 'analytics', 'socialSharing', 'search', 'uptime'];
+      categories.forEach(category => {
+        const checkbox = document.getElementById(category + 'Enabled');
+        const cost = document.getElementById(category + 'Cost');
+        const period = document.getElementById(category + 'Period');
+        const type = document.getElementById(category + 'Type');
+
+        if (checkbox && checkbox.checked) {
+          params.set(category + 'Enabled', 'true');
+          if (cost && cost.value) {
+            params.set(category + 'Cost', cost.value);
+          }
+          if (period && period.value) {
+            params.set(category + 'Period', period.value);
+          }
+          if (type && type.value) {
+            params.set(category + 'Type', type.value);
+          }
+        }
+      });
+
+      // Dev time savings
+      const devHourlyRate = document.getElementById('devHourlyRate').value;
+      if (devHourlyRate) params.set('devHourlyRate', devHourlyRate);
+
+      const devHoursPerMonth = document.getElementById('devHoursPerMonth').value;
+      if (devHoursPerMonth) params.set('devHoursPerMonth', devHoursPerMonth);
+
+      // Partner tier values
+      const agencyPartnerLeads = document.getElementById('agencyPartnerLeads').value;
+      if (agencyPartnerLeads) params.set('agencyPartnerLeads', agencyPartnerLeads);
+
+      const agencyPartnerLeadValue = document.getElementById('agencyPartnerLeadValue').value;
+      if (agencyPartnerLeadValue) params.set('agencyPartnerLeadValue', agencyPartnerLeadValue);
+
+      const proPartnerLeads = document.getElementById('proPartnerLeads').value;
+      if (proPartnerLeads) params.set('proPartnerLeads', proPartnerLeads);
+
+      const proPartnerLeadValue = document.getElementById('proPartnerLeadValue').value;
+      if (proPartnerLeadValue) params.set('proPartnerLeadValue', proPartnerLeadValue);
+
+      // Co-selling
+      const coSellingProjects = document.getElementById('coSellingProjects').value;
+      if (coSellingProjects) params.set('coSellingProjects', coSellingProjects);
+
+      const coSellingProjectValue = document.getElementById('coSellingProjectValue').value;
+      if (coSellingProjectValue) params.set('coSellingProjectValue', coSellingProjectValue);
+
+      // Revenue opportunity
+      const additionalSitesPerYear = document.getElementById('additionalSitesPerYear').value;
+      if (additionalSitesPerYear) params.set('additionalSitesPerYear', additionalSitesPerYear);
+
+      const averageRevenuePerSite = document.getElementById('averageRevenuePerSite').value;
+      if (averageRevenuePerSite) params.set('averageRevenuePerSite', averageRevenuePerSite);
+
+      // Generate full URL
+      const baseURL = window.location.origin + window.location.pathname;
+      return baseURL + '?' + params.toString();
+    }
+
+    // Copy shareable URL to clipboard
+    function copyShareableURL() {
+      const url = generateShareableURL();
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Shareable URL copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy URL:', err);
+        // Fallback: show URL in a prompt
+        prompt('Copy this URL:', url);
+      });
+    }
+
+    // Personalization Modal Functions
+    function openPersonalizationModal() {
+      document.getElementById('personalizationModal').style.display = 'flex';
+    }
+
+    function closePersonalizationModal() {
+      document.getElementById('personalizationModal').style.display = 'none';
+    }
+
+    function savePersonalization() {
+      closePersonalizationModal();
+      autoCompare();
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+      const modal = document.getElementById('personalizationModal');
+      if (event.target === modal) {
+        closePersonalizationModal();
+      }
+    }
   </script>
+
+  <!-- Personalization Modal -->
+  <div id="personalizationModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4); align-items: center; justify-content: center;">
+    <div style="background-color: white; margin: auto; padding: 0; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 90%; max-width: 500px;">
+      <div style="padding: 20px; border-bottom: 1px solid #ddd;">
+        <h2 style="margin: 0; color: var(--secondary-color); font-size: 20px;">Personalize Calculation</h2>
+      </div>
+      <div style="padding: 20px;">
+        <div style="margin-bottom: 20px;">
+          <label for="agencyName" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Agency Name</label>
+          <input type="text" id="agencyName" placeholder="e.g., Acme Digital Agency" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; box-sizing: border-box;">
+          <p style="margin: 8px 0 0 0; font-size: 12px; color: #666;">This will personalize the "Total Financial Impact" heading in the results</p>
+        </div>
+      </div>
+      <div style="padding: 15px 20px; border-top: 1px solid #ddd; display: flex; justify-content: flex-end; gap: 10px;">
+        <button onclick="closePersonalizationModal()" style="background: #6c757d; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Cancel</button>
+        <button onclick="savePersonalization()" style="background: var(--primary-color); color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Save</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
