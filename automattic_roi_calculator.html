@@ -1684,10 +1684,10 @@ const JETPACK_COMPLETE_VALUE = 899;
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px;">
               <div style="background: white; padding: 12px; border-radius: 4px;">
                 <h4 style="margin: 0 0 8px 0; color: var(--success-color); font-size: 14px;">Cost Savings</h4>
-                <p style="margin: 5px 0;"><strong>Hosting Price Savings:</strong> <span class="savings-amount">$${Math.abs(data.savings.yearly).toFixed(2)}/year</span></p>
-                ${data.toolReplacements ? `<p style="margin: 5px 0;"><strong>Plugin/Tool Savings:</strong> <span class="savings-amount">$${data.toolReplacements.totalSavings.toLocaleString()}/year</span></p>` : ''}
-                ${data.devTimeSavings && data.devTimeSavings.yearly > 0 ? `<p style="margin: 5px 0;"><strong>Developer Time Recovered:</strong> <span class="savings-amount">$${data.devTimeSavings.yearly.toLocaleString()}/year</span></p>` : ''}
-                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Subtotal Savings: <span class="savings-amount">$${(data.savings.yearly + toolSavings + devSavings).toLocaleString()}/year</span></p>
+                <p style="margin: 5px 0;"><strong>Hosting Price Savings:</strong> <span class="savings-amount" style="color: var(--success-color);">-$${Math.abs(data.savings.yearly).toFixed(2)}/year</span></p>
+                ${data.toolReplacements ? `<p style="margin: 5px 0;"><strong>Plugin/Tool Savings:</strong> <span class="savings-amount" style="color: var(--success-color);">-$${data.toolReplacements.totalSavings.toLocaleString()}/year</span></p>` : ''}
+                ${data.devTimeSavings && data.devTimeSavings.yearly > 0 ? `<p style="margin: 5px 0;"><strong>Developer Time Recovered:</strong> <span class="savings-amount" style="color: var(--success-color);">-$${data.devTimeSavings.yearly.toLocaleString()}/year</span></p>` : ''}
+                <p style="margin: 8px 0 0 0; padding-top: 8px; border-top: 1px solid var(--border-color); font-weight: 600;">Subtotal Savings: <span class="savings-amount" style="color: var(--success-color);">-$${(data.savings.yearly + toolSavings + devSavings).toLocaleString()}/year</span></p>
               </div>
               ${(data.partnerTier && data.partnerTier.leadValue > 0) || (data.coSelling && data.coSelling.yearly > 0) || (data.revenueOpportunity && data.revenueOpportunity.yearly > 0) ? `
               <div style="background: white; padding: 12px; border-radius: 4px;">
