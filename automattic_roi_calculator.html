@@ -9,7 +9,7 @@
     (function() {
       const faviconLink = document.getElementById('faviconLink');
       const hubspotUrl = "{{ module_asset_url('favicon.ico') }}";
-      if (!hubspotUrl.includes('{{')) {
+      if (!hubspotUrl.includes('{' + '{')) {
         faviconLink.href = hubspotUrl;
       }
     })();
@@ -415,7 +415,7 @@
         const logoImg = document.getElementById('agenciesLogo');
         const hubspotUrl = "{{ module_asset_url('automattic-for-agencies-logo.jpeg') }}";
         // If HubSpot template was processed, it won't contain the curly braces
-        if (!hubspotUrl.includes('{{')) {
+        if (!hubspotUrl.includes('{' + '{')) {
           logoImg.src = hubspotUrl;
         }
         // Otherwise keep the default local path
