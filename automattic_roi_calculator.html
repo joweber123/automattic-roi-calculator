@@ -2318,6 +2318,18 @@ const JETPACK_COMPLETE_VALUE = 899;
         }
       }
 
+      // Handle Pro Partner visibility from URL
+      if (urlParams.has('proPartnerVisible') && urlParams.get('proPartnerVisible') === 'true') {
+        const proSection = document.getElementById('pro-partner-section');
+        const toggleBtn = document.getElementById('pro-partner-toggle-btn');
+        if (proSection) {
+          proSection.style.display = 'block';
+          if (toggleBtn) {
+            toggleBtn.querySelector('button').textContent = 'Hide Pro Partner Estimate';
+          }
+        }
+      }
+
       // Trigger updates for any modified fields
       if (urlParams.size > 0) {
         updateToolSavings();
@@ -2413,6 +2425,12 @@ const JETPACK_COMPLETE_VALUE = 899;
 
       const proPartnerLeadValue = document.getElementById('proPartnerLeadValue').value;
       if (proPartnerLeadValue) params.set('proPartnerLeadValue', proPartnerLeadValue);
+
+      // Pro Partner toggle state
+      const proSection = document.getElementById('pro-partner-section');
+      if (proSection && proSection.style.display !== 'none') {
+        params.set('proPartnerVisible', 'true');
+      }
 
       // Co-selling
       const coSellingProjects = document.getElementById('coSellingProjects').value;
